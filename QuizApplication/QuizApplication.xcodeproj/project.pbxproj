@@ -11,6 +11,9 @@
 		13823A6D2A3C266B0078B91A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13823A6C2A3C266B0078B91A /* ContentView.swift */; };
 		13823A6F2A3C266C0078B91A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13823A6E2A3C266C0078B91A /* Assets.xcassets */; };
 		13823A722A3C266C0078B91A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13823A712A3C266C0078B91A /* Preview Assets.xcassets */; };
+		13823A872A3C28560078B91A /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13823A862A3C28560078B91A /* QuizView.swift */; };
+		13823A8A2A3C286C0078B91A /* DifficultyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13823A892A3C286C0078B91A /* DifficultyView.swift */; };
+		13823A8C2A3C28780078B91A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13823A8B2A3C28770078B91A /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +22,9 @@
 		13823A6C2A3C266B0078B91A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		13823A6E2A3C266C0078B91A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		13823A712A3C266C0078B91A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		13823A862A3C28560078B91A /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
+		13823A892A3C286C0078B91A /* DifficultyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyView.swift; sourceTree = "<group>"; };
+		13823A8B2A3C28770078B91A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +112,8 @@
 		13823A7C2A3C27AB0078B91A /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				13823A852A3C283E0078B91A /* ViewModel */,
+				13823A842A3C28360078B91A /* View */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -113,6 +121,8 @@
 		13823A7D2A3C27B30078B91A /* Difficulty */ = {
 			isa = PBXGroup;
 			children = (
+				13823A832A3C282D0078B91A /* ViewModel */,
+				13823A822A3C28280078B91A /* View */,
 			);
 			path = Difficulty;
 			sourceTree = "<group>";
@@ -120,6 +130,8 @@
 		13823A7E2A3C27BE0078B91A /* Quiz */ = {
 			isa = PBXGroup;
 			children = (
+				13823A812A3C28200078B91A /* ViewModel */,
+				13823A802A3C28180078B91A /* View */,
 			);
 			path = Quiz;
 			sourceTree = "<group>";
@@ -129,6 +141,51 @@
 			children = (
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		13823A802A3C28180078B91A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				13823A862A3C28560078B91A /* QuizView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		13823A812A3C28200078B91A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		13823A822A3C28280078B91A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				13823A892A3C286C0078B91A /* DifficultyView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		13823A832A3C282D0078B91A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		13823A842A3C28360078B91A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				13823A8B2A3C28770078B91A /* HomeView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		13823A852A3C283E0078B91A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,7 +259,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				13823A6D2A3C266B0078B91A /* ContentView.swift in Sources */,
+				13823A8A2A3C286C0078B91A /* DifficultyView.swift in Sources */,
 				13823A6B2A3C266B0078B91A /* QuizApplicationApp.swift in Sources */,
+				13823A8C2A3C28780078B91A /* HomeView.swift in Sources */,
+				13823A872A3C28560078B91A /* QuizView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
