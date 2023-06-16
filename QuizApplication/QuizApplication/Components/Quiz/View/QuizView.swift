@@ -8,13 +8,36 @@
 import SwiftUI
 
 struct QuizView: View {
+    @Environment(\.presentationMode) var presentationMode
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        VStack{
+            HStack{
+                Button{
+                    presentationMode.wrappedValue.dismiss()
+                }label: {
+                    Image(systemName: "arrow.left")
+                        .resizable()
+                        .foregroundColor(.black)
+                        .frame(width: 25, height: 25)
+                        .padding(5)
+                }
+                Spacer()
+            }
+            
+            
+            
+            
+            Spacer()
+                .navigationBarHidden(true)
+        }
+        
     }
 }
 
 struct QuizView_Previews: PreviewProvider {
     static var previews: some View {
         QuizView()
+            .environmentObject(QuizModelClass())
     }
 }

@@ -127,12 +127,7 @@ struct DifficultyView: View {
                         .padding(.horizontal , 20)
                         .shadow(color: .black, radius: 10)
                     
-                    
-                    
-                    
-                    
-                    
-                    
+                       
                 }
                 Spacer()
             }
