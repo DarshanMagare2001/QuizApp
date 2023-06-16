@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct QuizApplicationApp: App {
+    
+  @State var viewModel = QuizModelClass()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView{
+                ContentView()
+            }.environmentObject(viewModel)
         }
     }
 }

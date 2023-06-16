@@ -14,6 +14,7 @@
 		13823A872A3C28560078B91A /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13823A862A3C28560078B91A /* QuizView.swift */; };
 		13823A8A2A3C286C0078B91A /* DifficultyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13823A892A3C286C0078B91A /* DifficultyView.swift */; };
 		13823A8C2A3C28780078B91A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13823A8B2A3C28770078B91A /* HomeView.swift */; };
+		13823A8E2A3C29350078B91A /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13823A8D2A3C29350078B91A /* Model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		13823A862A3C28560078B91A /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
 		13823A892A3C286C0078B91A /* DifficultyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyView.swift; sourceTree = "<group>"; };
 		13823A8B2A3C28770078B91A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		13823A8D2A3C29350078B91A /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,8 +61,8 @@
 			children = (
 				13823A7F2A3C27CE0078B91A /* Extensions */,
 				13823A792A3C27010078B91A /* MainAppContent */,
-				13823A7B2A3C27400078B91A /* Components */,
 				13823A782A3C26F80078B91A /* Model */,
+				13823A7B2A3C27400078B91A /* Components */,
 				13823A7A2A3C272C0078B91A /* Resources */,
 				13823A702A3C266C0078B91A /* Preview Content */,
 			);
@@ -78,6 +80,7 @@
 		13823A782A3C26F80078B91A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				13823A8D2A3C29350078B91A /* Model.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				13823A6D2A3C266B0078B91A /* ContentView.swift in Sources */,
 				13823A8A2A3C286C0078B91A /* DifficultyView.swift in Sources */,
 				13823A6B2A3C266B0078B91A /* QuizApplicationApp.swift in Sources */,
+				13823A8E2A3C29350078B91A /* Model.swift in Sources */,
 				13823A8C2A3C28780078B91A /* HomeView.swift in Sources */,
 				13823A872A3C28560078B91A /* QuizView.swift in Sources */,
 			);

@@ -8,17 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var viewModel : QuizModelClass
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
         
-        
-        //New
+        VStack{
+            Text("Hello, world!")
+                .padding()
+        }.onAppear{
+            print(viewModel.quizModelArray)
+        }
+       
+      
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(QuizModelClass())
     }
 }
