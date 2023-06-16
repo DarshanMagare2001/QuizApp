@@ -8,8 +8,27 @@
 import SwiftUI
 
 struct DifficultyView: View {
+    @Environment(\.presentationMode) var presentationMode
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack{
+            BubbleView()
+            VStack{
+                 HStack{
+                    Button{
+                        presentationMode.wrappedValue.dismiss()
+                    }label: {
+                        Image(systemName: "arrow.left")
+                            .resizable()
+                            .foregroundColor(.white)
+                            .frame(width: 25, height: 25)
+                            .padding(5)
+                    }
+                    Spacer()
+                }
+                Spacer()
+            }
+            .navigationBarHidden(true)
+        }
     }
 }
 

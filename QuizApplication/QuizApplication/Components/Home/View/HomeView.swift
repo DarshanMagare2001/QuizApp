@@ -88,8 +88,7 @@ struct HomeView: View {
             NavigationLink(destination: DifficultyView(), isActive: $isDifficultyViewShow){
                 
             }
-              
-        }
+         }
      }
 }
 
