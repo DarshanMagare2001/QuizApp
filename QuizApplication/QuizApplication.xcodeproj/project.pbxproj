@@ -51,9 +51,10 @@
 		13823A692A3C266B0078B91A /* QuizApplication */ = {
 			isa = PBXGroup;
 			children = (
-				13823A6A2A3C266B0078B91A /* QuizApplicationApp.swift */,
-				13823A6C2A3C266B0078B91A /* ContentView.swift */,
-				13823A6E2A3C266C0078B91A /* Assets.xcassets */,
+				13823A7B2A3C27400078B91A /* Components */,
+				13823A792A3C27010078B91A /* MainAppContent */,
+				13823A782A3C26F80078B91A /* Model */,
+				13823A7A2A3C272C0078B91A /* Resources */,
 				13823A702A3C266C0078B91A /* Preview Content */,
 			);
 			path = QuizApplication;
@@ -65,6 +66,37 @@
 				13823A712A3C266C0078B91A /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		13823A782A3C26F80078B91A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		13823A792A3C27010078B91A /* MainAppContent */ = {
+			isa = PBXGroup;
+			children = (
+				13823A6A2A3C266B0078B91A /* QuizApplicationApp.swift */,
+				13823A6C2A3C266B0078B91A /* ContentView.swift */,
+			);
+			path = MainAppContent;
+			sourceTree = "<group>";
+		};
+		13823A7A2A3C272C0078B91A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				13823A6E2A3C266C0078B91A /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		13823A7B2A3C27400078B91A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
