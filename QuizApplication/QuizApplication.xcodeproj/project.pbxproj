@@ -51,8 +51,9 @@
 		13823A692A3C266B0078B91A /* QuizApplication */ = {
 			isa = PBXGroup;
 			children = (
-				13823A7B2A3C27400078B91A /* Components */,
+				13823A7F2A3C27CE0078B91A /* Extensions */,
 				13823A792A3C27010078B91A /* MainAppContent */,
+				13823A7B2A3C27400078B91A /* Components */,
 				13823A782A3C26F80078B91A /* Model */,
 				13823A7A2A3C272C0078B91A /* Resources */,
 				13823A702A3C266C0078B91A /* Preview Content */,
@@ -95,8 +96,39 @@
 		13823A7B2A3C27400078B91A /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				13823A7E2A3C27BE0078B91A /* Quiz */,
+				13823A7D2A3C27B30078B91A /* Difficulty */,
+				13823A7C2A3C27AB0078B91A /* Home */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		13823A7C2A3C27AB0078B91A /* Home */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		13823A7D2A3C27B30078B91A /* Difficulty */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Difficulty;
+			sourceTree = "<group>";
+		};
+		13823A7E2A3C27BE0078B91A /* Quiz */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Quiz;
+			sourceTree = "<group>";
+		};
+		13823A7F2A3C27CE0078B91A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
