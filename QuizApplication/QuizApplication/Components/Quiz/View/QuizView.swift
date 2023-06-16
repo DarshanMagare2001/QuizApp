@@ -11,10 +11,11 @@ struct QuizView: View {
     @State var isAnsweredCorrectly: Bool?
     @State var score = 0 // Track the score count
     var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // Timer to track the counter
+    @State var showFeedbackSheet = false
     
     var body: some View {
         VStack(spacing: 15) {
-            HStack(spacing:20) {
+            HStack(spacing:30) {
                 Button {
                     presentationMode.wrappedValue.dismiss()
                 } label: {
@@ -64,12 +65,16 @@ struct QuizView: View {
                                     }
                                     
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                        // After 1 second, move to the next question
+                                        // After 1 second, move to the next question or show feedback sheet
                                         selectedOption = nil // Reset the selected option
                                         isAnsweredCorrectly = nil // Reset the answered correctly flag
                                         if currentQuestionIndex < quiz.count - 1 {
                                             currentQuestionIndex += 1
                                             counter = 0 // Reset the timer when the question changes
+                                        } else {
+                                            // All questions finished, show feedback sheet
+                                            showFeedbackSheet = true
+                                            timer.upstream.connect().cancel() // Stop the timer
                                         }
                                     }
                                 }) {
@@ -112,6 +117,9 @@ struct QuizView: View {
         .onAppear {
             print(quiz)
         }
+        .sheet(isPresented: $showFeedbackSheet) {
+            FeedbackSheet(score: score, totalQuestions: quiz.count)
+        }
         .onReceive(timer) { time in
             if self.counter < self.countTo {
                 self.counter += 1
@@ -121,8 +129,9 @@ struct QuizView: View {
                     self.currentQuestionIndex += 1 // Move to the next question
                     self.counter = 0 // Reset the timer
                 } else {
-                    // Quiz finished
-                    self.presentationMode.wrappedValue.dismiss()
+                    // All questions finished, show feedback sheet
+                    self.showFeedbackSheet = true
+                    self.timer.upstream.connect().cancel() // Stop the timer
                 }
             }
         }
@@ -233,3 +242,48 @@ struct HorizontalProgressBar: View {
         return maxWidth * questionProgress
     }
 }
+
+struct FeedbackSheet: View {
+    @Environment(\.presentationMode) var presentationMode
+    var score: Int
+    var totalQuestions: Int
+    
+    var body: some View {
+        VStack {
+            Text("Quiz Finished")
+                .font(.title)
+                .padding(.top, 20)
+            
+            Spacer()
+            
+            Text("Score: \(score)/\(totalQuestions)")
+                .font(.headline)
+            
+            Spacer()
+            
+            Button(action: {
+                // Dismiss the feedback sheet and go back
+                dismissSheet()
+            }) {
+                Text("Close")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 20)
+                    .background(Color.blue)
+                    .cornerRadius(10)
+            }
+            
+            Spacer()
+        }
+        .padding()
+    }
+    
+    private func dismissSheet() {
+        // Delay the sheet dismissal to allow time for the user to see the score
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.presentationMode.wrappedValue.dismiss()
+        }
+    }
+}
+
