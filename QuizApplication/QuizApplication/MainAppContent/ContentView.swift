@@ -11,15 +11,10 @@ struct ContentView: View {
     @EnvironmentObject var viewModel : QuizModelClass
     
     var body: some View {
-        
         VStack{
-            Text("Hello, world!")
-                .padding()
-        }.onAppear{
-            print(viewModel.quizModelArray)
+          HomeView()
+                .navigationBarHidden(true)
         }
-       
-      
     }
 }
 
