@@ -1,10 +1,3 @@
-//
-//  QuizView.swift
-//  QuizApplication
-//
-//  Created by IPS-161 on 16/06/23.
-//
-
 import SwiftUI
 
 struct QuizView: View {
@@ -13,6 +6,8 @@ struct QuizView: View {
     var countTo: Int = 30
     var quiz: [Quiz]
     @State var currentQuestionIndex = 0 // Track the current question index
+    @State var selectedOption: Int?
+    @State var isAnsweredCorrectly: Bool?
 
     var body: some View {
         VStack(spacing: 20) {
@@ -50,44 +45,33 @@ struct QuizView: View {
                     VStack {
                         Text("Q. \(quiz[currentQuestionIndex].questionTitle)") // Show the current question
                         // Show the options for the current question
-                        Button(action: {
-                            // Handle option 1 selection
-                        }) {
-                            Text(quiz[currentQuestionIndex].option1)
-                                .font(.headline)
-                                .foregroundColor(.black)
-                                .padding(5)
-                        }
-                        
-                        Button(action: {
-                            // Handle option 2 selection
-                        }) {
-                            Text(quiz[currentQuestionIndex].option2)
-                                .font(.headline)
-                                .foregroundColor(.black)
-                                .padding(5)
-                        }
-                        
-                        Button(action: {
-                            // Handle option 3 selection
-                        }) {
-                            Text(quiz[currentQuestionIndex].option3)
-                                .font(.headline)
-                                .foregroundColor(.black)
-                                .padding(5)
-                        }
-                        
-                        Button(action: {
-                            // Handle option 4 selection
-                        }) {
-                            Text(quiz[currentQuestionIndex].option4)
-                                .font(.headline)
-                                .foregroundColor(.black)
-                                .padding(5)
+                        ForEach(1...4, id: \.self) { optionIndex in
+                            Button(action: {
+                                selectedOption = optionIndex // Set selected option
+                                isAnsweredCorrectly = quiz[currentQuestionIndex].getOption(for: optionIndex) == quiz[currentQuestionIndex].correctAns // Compare selected option with correct answer
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                    // After 2 seconds, move to the next question
+                                    selectedOption = nil // Reset selected option
+                                    isAnsweredCorrectly = nil // Reset answered correctly flag
+                                    if currentQuestionIndex < quiz.count - 1 {
+                                        currentQuestionIndex += 1
+                                    }
+                                }
+                            }) {
+                                Text(quiz[currentQuestionIndex].getOption(for: optionIndex))
+                                    .font(.headline)
+                                    .foregroundColor(.black)
+                                    .padding(5)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(getButtonColor(optionIndex: optionIndex))
+                                    )
+                            }
+                            .disabled(selectedOption != nil) // Disable buttons once an option is selected
                         }
                     }
                 }
-            }.background(.red)
+            }
             .cornerRadius(20)
             .padding(.horizontal, 10)
             
@@ -112,12 +96,31 @@ struct QuizView: View {
             }
         }
     }
+    
+    private func getButtonColor(optionIndex: Int) -> Color {
+        if let selectedOption = selectedOption, let isAnsweredCorrectly = isAnsweredCorrectly {
+            if optionIndex == selectedOption {
+                return isAnsweredCorrectly ? Color.green : Color.red
+            }
+        }
+        return Color.clear
+    }
 }
 
+extension Quiz {
+    func getOption(for index: Int) -> String {
+        switch index {
+        case 1:
+            return option1
+        case 2:
+            return option2
+        case 3:
+            return option3
+        case 4:
+            return option4
+        default:
+            return ""
+        }
+    }
+}
 
-//struct QuizView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        QuizView( quiz: [Quiz(questionTitle: <#T##String#>, option4: <#T##String#>)])
-//            .environmentObject(QuizModelClass())
-//    }
-//}
