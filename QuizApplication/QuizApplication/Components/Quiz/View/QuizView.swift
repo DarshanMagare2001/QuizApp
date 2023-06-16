@@ -13,7 +13,7 @@ struct QuizView: View {
     var countTo: Int = 30
     var body: some View {
         
-        VStack(spacing:10){
+        VStack(spacing:20){
             HStack{
                 Button{
                     presentationMode.wrappedValue.dismiss()
@@ -30,7 +30,7 @@ struct QuizView: View {
             HStack{
                 Spacer()
                 Circle()
-                    .frame(width: 100, height: 100)
+                    .frame(width: 80, height: 80)
                     .foregroundColor(.white)
                     .overlay{
                         ProgressTrack()
@@ -39,12 +39,14 @@ struct QuizView: View {
                     }
                 
                 Spacer()
-            }.frame(height:100)
+            }.frame(height:80)
             
             VStack{
-                Text("darshan")
                 HStack{
                     Spacer()
+                }
+                ScrollView{
+                    Text("Darshan")
                 }
             }.background(.red)
                 .cornerRadius(20)
