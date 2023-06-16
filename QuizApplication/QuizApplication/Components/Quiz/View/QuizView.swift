@@ -9,6 +9,7 @@ struct QuizView: View {
     @State var currentQuestionIndex = 0 // Track the current question index
     @State var selectedOption: Int?
     @State var isAnsweredCorrectly: Bool?
+    @State var score = 0 // Track the score count
     var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // Timer to track the counter
     
     var body: some View {
@@ -23,6 +24,9 @@ struct QuizView: View {
                         .frame(width: 25, height: 25)
                         .padding(5)
                 }
+                
+                Text("Score: \(score)") // Display the score
+                
                 Spacer()
             }
             
@@ -53,6 +57,10 @@ struct QuizView: View {
                                 Button(action: {
                                     selectedOption = optionIndex // Set the selected option
                                     isAnsweredCorrectly = quiz[currentQuestionIndex].getOption(for: optionIndex) == quiz[currentQuestionIndex].correctAns
+                                    
+                                    if isAnsweredCorrectly == true {
+                                        score += 1 // Increment the score if answered correctly
+                                    }
                                     
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                                         // After 1 second, move to the next question
@@ -114,17 +122,11 @@ struct QuizView: View {
     
     private func getButtonColor(optionIndex: Int) -> Color {
         if let isAnsweredCorrectly = isAnsweredCorrectly {
-            if isAnsweredCorrectly == true {
-                if optionIndex == selectedOption {
+            if optionIndex == selectedOption {
+                if isAnsweredCorrectly {
                     return Color.green
-                }
-            } else {
-                if let correctOptionIndex = quiz[currentQuestionIndex].getCorrectOptionIndex() {
-                    if optionIndex == correctOptionIndex + 1 {
-                        return Color.green
-                    } else if optionIndex == selectedOption {
-                        return Color.red
-                    }
+                } else {
+                    return Color.red
                 }
             }
         }
@@ -132,12 +134,7 @@ struct QuizView: View {
         return Color.clear
     }
 
-
-
-
-
-
-    
+  
     private func getButtonOpacity(optionIndex: Int) -> Double {
         if selectedOption != nil && optionIndex != selectedOption {
             return 0.4
@@ -145,6 +142,7 @@ struct QuizView: View {
         return 1.0
     }
 }
+
 
 extension Quiz {
     func getOption(for index: Int) -> String {
