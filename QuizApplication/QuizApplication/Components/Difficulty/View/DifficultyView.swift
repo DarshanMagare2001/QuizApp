@@ -13,7 +13,7 @@ struct DifficultyView: View {
         ZStack{
             BubbleView()
             VStack{
-                 HStack{
+                HStack{
                     Button{
                         presentationMode.wrappedValue.dismiss()
                     }label: {
@@ -27,7 +27,7 @@ struct DifficultyView: View {
                 }
                 
                 Spacer()
-          
+                
                 VStack{
                     VStack{
                         HStack{
@@ -37,28 +37,27 @@ struct DifficultyView: View {
                                 .font(.largeTitle)
                                 .bold()
                                 .foregroundColor(.white)
-                                
+                            
                             Spacer()
                         }.background(.blue)
                         
                         HStack{
                             Spacer()
-                            Button{
-                                
-                            }label: {
+                            
+                            NavigationLink(destination: QuizView()) {
                                 Text("Start Quiz!")
                                     .font(.headline)
                                     .foregroundColor(.black)
                                     .bold()
-                                   
-                                
-                            } .padding(5)
+                                    .padding(5)
+                            }
+                            
                             Spacer()
                             
                         }.background(.green)
                         
                     }.background(.white)
-                    .cornerRadius(20)
+                        .cornerRadius(20)
                         .padding(.horizontal , 20)
                     
                     Spacer()
@@ -71,30 +70,27 @@ struct DifficultyView: View {
                                 .font(.largeTitle)
                                 .bold()
                                 .foregroundColor(.white)
-                              
+                            
                             Spacer()
                         }.background(.blue)
                         
                         HStack{
                             Spacer()
-                            Button{
-                                
-                            }label: {
+                            NavigationLink(destination: QuizView()) {
                                 Text("Start Quiz!")
                                     .font(.headline)
                                     .foregroundColor(.black)
                                     .bold()
-                                   
-                                
-                            } .padding(5)
+                                    .padding(5)
+                            }
                             Spacer()
                             
                         }.background(.green)
                         
                     }.background(.white)
-                    .cornerRadius(20)
+                        .cornerRadius(20)
                         .padding(.horizontal , 20)
-
+                    
                     Spacer()
                     
                     VStack{
@@ -105,37 +101,34 @@ struct DifficultyView: View {
                                 .font(.largeTitle)
                                 .bold()
                                 .foregroundColor(.white)
-                               
+                            
                             Spacer()
                         }.background(.blue)
                         
                         HStack{
                             Spacer()
-                            Button{
-                                
-                            }label: {
+                            NavigationLink(destination: QuizView()) {
                                 Text("Start Quiz!")
                                     .font(.headline)
                                     .foregroundColor(.black)
                                     .bold()
-                                   
-                                
-                            } .padding(5)
+                                    .padding(5)
+                            }
                             Spacer()
                             
                         }.background(.green)
                         
                     }.background(.white)
-                    .cornerRadius(20)
+                        .cornerRadius(20)
                         .padding(.horizontal , 20)
                     
                     
                     
                     
                     
-
+                    
                 }
-                 Spacer()
+                Spacer()
             }
             .navigationBarHidden(true)
         }
