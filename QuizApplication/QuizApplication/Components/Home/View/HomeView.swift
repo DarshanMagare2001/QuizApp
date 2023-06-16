@@ -9,10 +9,31 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        VStack{
+        ZStack{
             BubbleView()
+            VStack{
+              
+                HStack{
+                    Spacer()
+                    Text("Quiz")
+                        .italic()
+                        .font(.largeTitle)
+                       .bold()
+                       .padding(5)
+                     Spacer()
+                }.background(.white)
+                    .cornerRadius(20)
+                    .opacity(0.7)
+                    .shadow(color: .white, radius: 10)
+                    .padding(5)
+                
+                
+              Spacer()
+               
+                 
+            }
         }
-    }
+     }
 }
 
 struct HomeView_Previews: PreviewProvider {
