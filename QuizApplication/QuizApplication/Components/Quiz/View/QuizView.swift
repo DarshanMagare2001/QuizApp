@@ -10,9 +10,9 @@ struct QuizView: View {
     @State var selectedOption: Int?
     @State var isAnsweredCorrectly: Bool?
     var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // Timer to track the counter
-
+    
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 10) {
             HStack {
                 Button {
                     presentationMode.wrappedValue.dismiss()
@@ -45,13 +45,13 @@ struct QuizView: View {
                 }
                 ScrollView {
                     VStack {
-                        Text("Q. \(quiz[currentQuestionIndex].questionTitle)") // Show the current question
+                        Text("Q. \(quiz[currentQuestionIndex].questionTitle ?? "")") // Show the current question
                         // Show the options for the current question
                         ForEach(1...4, id: \.self) { optionIndex in
                             Button(action: {
                                 selectedOption = optionIndex // Set selected option
                                 isAnsweredCorrectly = quiz[currentQuestionIndex].getOption(for: optionIndex) == quiz[currentQuestionIndex].correctAns // Compare selected option with correct answer
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                                     // After 2 seconds, move to the next question
                                     selectedOption = nil // Reset selected option
                                     isAnsweredCorrectly = nil // Reset answered correctly flag
@@ -68,7 +68,10 @@ struct QuizView: View {
                                     .background(
                                         RoundedRectangle(cornerRadius: 10)
                                             .fill(getButtonColor(optionIndex: optionIndex))
+                                            .opacity(getButtonOpacity(optionIndex: optionIndex))
                                     )
+                                    .modifier(ConditionalBackgroundColorModifier(color: getButtonColor(optionIndex: optionIndex)))
+                                
                             }
                             .disabled(selectedOption != nil) // Disable buttons once an option is selected
                         }
@@ -101,12 +104,32 @@ struct QuizView: View {
     }
     
     private func getButtonColor(optionIndex: Int) -> Color {
-        if let selectedOption = selectedOption, let isAnsweredCorrectly = isAnsweredCorrectly {
-            if optionIndex == selectedOption {
-                return isAnsweredCorrectly ? Color.green : Color.red
+        if let isAnsweredCorrectly = isAnsweredCorrectly, isAnsweredCorrectly == false {
+            // Highlight the correct option in green and the selected wrong option in red
+            let correctOptionIndex = quiz[currentQuestionIndex].getCorrectOptionIndex()
+            if optionIndex == correctOptionIndex {
+                return Color.green
+            }
+            else{
+                return Color.red
             }
         }
+        
+        
         return Color.clear
+    }
+    
+    
+    
+    
+    
+    
+    
+    private func getButtonOpacity(optionIndex: Int) -> Double {
+        if selectedOption != nil && optionIndex != selectedOption {
+            return 0.4
+        }
+        return 1.0
     }
 }
 
@@ -114,16 +137,42 @@ extension Quiz {
     func getOption(for index: Int) -> String {
         switch index {
         case 1:
-            return option1
+            return "A. \(option1 ?? "")"
         case 2:
-            return option2
+            return "B. \(option2 ?? "")"
         case 3:
-            return option3
+            return "C. \(option3 ?? "")"
         case 4:
-            return option4
+            return "D. \(option4 ?? "")"
         default:
             return ""
         }
     }
+    
+    func getCorrectOptionIndex() -> Int? {
+        if let correctAnswer = correctAns {
+            switch correctAnswer {
+            case option1:
+                return 1
+            case option2:
+                return 2
+            case option3:
+                return 3
+            case option4:
+                return 4
+            default:
+                return nil
+            }
+        }
+        return nil
+    }
 }
 
+struct ConditionalBackgroundColorModifier: ViewModifier {
+    let color: Color
+    
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(color.opacity(color == Color.clear ? 0 : 1))
+    }
+}

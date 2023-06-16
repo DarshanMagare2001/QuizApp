@@ -16,8 +16,8 @@ struct QuizModel: Codable {
 
 // MARK: - Quiz
 struct Quiz: Codable {
-    let questionTitle, option1, option2, option3: String
-    let option4, correctAns: String
+    let questionTitle, option1, option2, option3: String?
+    let option4, correctAns: String?
 }
 
 
