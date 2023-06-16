@@ -1,19 +1,15 @@
-//
-//  HomeView.swift
-//  QuizApplication
-//
-//  Created by IPS-161 on 16/06/23.
-//
-
 import SwiftUI
-
+import SwiftUIBottomSheet
 struct HomeView: View {
+    @State private var isShown = false
+    @State private var height: CGFloat = 300
+    @State private var requestedSize: CGFloat = 300
+    
     var body: some View {
-        ZStack{
+        ZStack {
             BubbleView()
-            VStack{
-                
-                HStack{
+            VStack {
+                HStack {
                     Spacer()
                     Text("Quiz")
                         .italic()
@@ -21,16 +17,18 @@ struct HomeView: View {
                         .bold()
                         .padding(5)
                     Spacer()
-                }.background(.white)
-                    .cornerRadius(20)
-                    .opacity(0.7)
-                    .shadow(color: .white, radius: 10)
-                    .padding(10)
+                }
+                .background(Color.white)
+                .cornerRadius(20)
+                .opacity(0.7)
+                .shadow(color: .white, radius: 10)
+                .padding(10)
+                
                 Spacer()
                 
-                HStack{
+                HStack {
                     Spacer()
-                    Text("Lets Play!")
+                    Text("Let's Play!")
                         .font(.system(size: 50))
                         .foregroundColor(.white)
                         .italic()
@@ -40,49 +38,62 @@ struct HomeView: View {
                     Spacer()
                 }
                 
-                VStack{
-                    Button{
-                        
-                    }label: {
-                        
-                        HStack{
+                VStack {
+                    Button(action: {
+                        // Action for the "Play Now" button
+                    }) {
+                        HStack {
                             Spacer()
                             Text("Play Now")
                                 .foregroundColor(.white)
                                 .font(.title)
                             Spacer()
-                        }.padding()
-                            .background(.blue)
-                            .cornerRadius(20)
-                        
-                        
-                        
+                        }
+                        .padding()
+                        .background(Color.blue)
+                        .cornerRadius(20)
                     }
                     
-                    
-                    Button{
-                        
-                    }label: {
-                        HStack{
+                    Button(action: {
+                        isShown = true
+                    }) {
+                        HStack {
                             Spacer()
                             Text("Rules")
                                 .foregroundColor(.white)
                                 .font(.title)
                             Spacer()
-                        }.padding()
-                            .background(.blue)
-                            .cornerRadius(20)
+                        }
+                        .padding()
+                        .background(Color.blue)
+                        .cornerRadius(20)
                     }
-                }.padding(.horizontal,10)
-                    .padding(.vertical , 5)
-                
+                }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
+                .bottomSheet(isPresented: $isShown, config: .init(sizeChangeRequest: $requestedSize)) {
+                    BottomSheet()
+                        .frame(height: height)
+                }
+                .onValueChange(requestedSize) { sz in
+                    if height < 220 && sz > 220 {
+                        height = 300
+                    } else if height > 580 && sz < 580 {
+                        height = 300
+                    }
+                }
             }
         }
+        
+        
     }
 }
+
+
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
     }
 }
+
