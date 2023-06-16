@@ -113,18 +113,25 @@ struct QuizView: View {
     }
     
     private func getButtonColor(optionIndex: Int) -> Color {
-        if let isAnsweredCorrectly = isAnsweredCorrectly, isAnsweredCorrectly == false {
-            if let correctOptionIndex = quiz[currentQuestionIndex].getCorrectOptionIndex() {
-                if optionIndex == correctOptionIndex + 1 {
+        if let isAnsweredCorrectly = isAnsweredCorrectly {
+            if isAnsweredCorrectly == true {
+                if optionIndex == selectedOption {
                     return Color.green
-                } else if optionIndex == selectedOption {
-                    return Color.red
+                }
+            } else {
+                if let correctOptionIndex = quiz[currentQuestionIndex].getCorrectOptionIndex() {
+                    if optionIndex == correctOptionIndex + 1 {
+                        return Color.green
+                    } else if optionIndex == selectedOption {
+                        return Color.red
+                    }
                 }
             }
         }
         
         return Color.clear
     }
+
 
 
 
