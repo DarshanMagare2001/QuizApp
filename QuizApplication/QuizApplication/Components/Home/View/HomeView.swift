@@ -4,6 +4,7 @@ struct HomeView: View {
     @State private var isShown = false
     @State private var height: CGFloat = 250
     @State private var requestedSize: CGFloat = 250
+    @State private var isDifficultyViewShow = false
     
     var body: some View {
         ZStack {
@@ -40,7 +41,7 @@ struct HomeView: View {
                 
                 VStack {
                     Button(action: {
-                        // Action for the "Play Now" button
+                        isDifficultyViewShow.toggle()
                     }) {
                         HStack {
                             Spacer()
@@ -83,10 +84,13 @@ struct HomeView: View {
                     }
                 }
             }
+            
+            NavigationLink(destination: DifficultyView(), isActive: $isDifficultyViewShow){
+                
+            }
+              
         }
-        
-        
-    }
+     }
 }
 
 
