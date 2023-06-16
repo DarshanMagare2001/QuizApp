@@ -6,7 +6,6 @@
 //
 
 import Foundation
-
 import SwiftUI
 
 let timer = Timer
@@ -32,7 +31,6 @@ struct Clock: View {
         
         return "\(minutes):\(seconds < 10 ? "0" : "")\(seconds)"
     }
-    
 }
 
 struct ProgressTrack: View {
@@ -42,7 +40,7 @@ struct ProgressTrack: View {
             .frame(width: 80, height: 80)
             .overlay(
                 Circle().stroke(Color.black, lineWidth: 12)
-        )
+            )
     }
 }
 
@@ -55,19 +53,18 @@ struct ProgressBar: View {
             .fill(Color.clear)
             .frame(width: 80, height: 80)
             .overlay(
-                Circle().trim(from:0, to: progress())
+                Circle().trim(from: 0, to: progress())
                     .stroke(
                         style: StrokeStyle(
                             lineWidth: 15,
                             lineCap: .round,
-                            lineJoin:.round
+                            lineJoin: .round
                         )
                 )
-                    .foregroundColor(
-                        (completed() ? Color.green : Color.orange)
-                ).animation(
-                    .easeInOut(duration: 0.2)
+                .foregroundColor(
+                    completed() ? Color.green : Color.orange
                 )
+                .animation(.easeInOut(duration: 0.2))
         )
     }
     
@@ -76,6 +73,6 @@ struct ProgressBar: View {
     }
     
     func progress() -> CGFloat {
-        return (CGFloat(counter) / CGFloat(countTo))
+        return CGFloat(counter) / CGFloat(countTo)
     }
 }

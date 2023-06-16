@@ -9,15 +9,16 @@ import SwiftUI
 
 struct DifficultyView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var viewModel : QuizModelClass
+    @EnvironmentObject var viewModel: QuizModelClass
+    
     var body: some View {
-        ZStack{
+        ZStack {
             BubbleView()
-            VStack{
-                HStack{
-                    Button{
+            VStack {
+                HStack {
+                    Button {
                         presentationMode.wrappedValue.dismiss()
-                    }label: {
+                    } label: {
                         Image(systemName: "arrow.left")
                             .resizable()
                             .foregroundColor(.white)
@@ -29,9 +30,9 @@ struct DifficultyView: View {
                 
                 Spacer()
                 
-                VStack{
-                    VStack{
-                        HStack{
+                VStack {
+                    VStack {
+                        HStack {
                             Spacer()
                             Text("Easy")
                                 .font(.system(size: 30))
@@ -40,9 +41,10 @@ struct DifficultyView: View {
                                 .foregroundColor(.white)
                             
                             Spacer()
-                        }.background(.purple)
+                        }
+                        .background(.purple)
                         
-                        HStack{
+                        HStack {
                             Spacer()
                             if let data = viewModel.quizModelArray {
                                 NavigationLink(destination: QuizView(quiz: data[0].quiz)) {
@@ -54,19 +56,18 @@ struct DifficultyView: View {
                                 }
                             }
                             Spacer()
-                            
-                        }.background(.green)
-                        
-                    }.background(.white)
-                        .cornerRadius(20)
-                        .padding(.horizontal , 20)
-                        .shadow(color: .black, radius: 10)
-                    
+                        }
+                        .background(.green)
+                    }
+                    .background(.white)
+                    .cornerRadius(20)
+                    .padding(.horizontal, 20)
+                    .shadow(color: .black, radius: 10)
                     
                     Spacer()
                     
-                    VStack{
-                        HStack{
+                    VStack {
+                        HStack {
                             Spacer()
                             Text("Normal")
                                 .font(.system(size: 30))
@@ -75,9 +76,10 @@ struct DifficultyView: View {
                                 .foregroundColor(.white)
                             
                             Spacer()
-                        }.background(.pink)
+                        }
+                        .background(.pink)
                         
-                        HStack{
+                        HStack {
                             Spacer()
                             if let data = viewModel.quizModelArray {
                                 NavigationLink(destination: QuizView(quiz: data[1].quiz)) {
@@ -89,19 +91,18 @@ struct DifficultyView: View {
                                 }
                             }
                             Spacer()
-                            
-                        }.background(.yellow)
-                        
-                    }.background(.white)
-                        .cornerRadius(20)
-                        .padding(.horizontal , 20)
-                        .shadow(color: .black, radius: 10)
-                    
+                        }
+                        .background(.yellow)
+                    }
+                    .background(.white)
+                    .cornerRadius(20)
+                    .padding(.horizontal, 20)
+                    .shadow(color: .black, radius: 10)
                     
                     Spacer()
                     
-                    VStack{
-                        HStack{
+                    VStack {
+                        HStack {
                             Spacer()
                             Text("Hard")
                                 .font(.system(size: 30))
@@ -110,9 +111,10 @@ struct DifficultyView: View {
                                 .foregroundColor(.white)
                             
                             Spacer()
-                        }.background(.blue)
+                        }
+                        .background(.blue)
                         
-                        HStack{
+                        HStack {
                             Spacer()
                             if let data = viewModel.quizModelArray {
                                 NavigationLink(destination: QuizView(quiz: data[2].quiz)) {
@@ -124,16 +126,15 @@ struct DifficultyView: View {
                                 }
                             }
                             Spacer()
-                            
-                        }.background(.red)
-                        
-                    }.background(.white)
-                        .cornerRadius(20)
-                        .padding(.horizontal , 20)
-                        .shadow(color: .black, radius: 10)
-                    
-                       
+                        }
+                        .background(.red)
+                    }
+                    .background(.white)
+                    .cornerRadius(20)
+                    .padding(.horizontal, 20)
+                    .shadow(color: .black, radius: 10)
                 }
+                
                 Spacer()
             }
             .navigationBarHidden(true)
