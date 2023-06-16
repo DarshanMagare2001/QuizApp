@@ -18,6 +18,7 @@
 		13823A902A3C2DA60078B91A /* BubbleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13823A8F2A3C2DA60078B91A /* BubbleAnimation.swift */; };
 		13823A952A3C3AA50078B91A /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13823A942A3C3AA50078B91A /* BottomSheet.swift */; };
 		13823A982A3C3D200078B91A /* SwiftUIBottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 13823A972A3C3D200078B91A /* SwiftUIBottomSheet */; };
+		13823A9A2A3C57750078B91A /* CircularTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13823A992A3C57750078B91A /* CircularTimer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		13823A8D2A3C29350078B91A /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		13823A8F2A3C2DA60078B91A /* BubbleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleAnimation.swift; sourceTree = "<group>"; };
 		13823A942A3C3AA50078B91A /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
+		13823A992A3C57750078B91A /* CircularTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularTimer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 		13823A812A3C28200078B91A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				13823A992A3C57750078B91A /* CircularTimer.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				13823A6D2A3C266B0078B91A /* ContentView.swift in Sources */,
 				13823A8A2A3C286C0078B91A /* DifficultyView.swift in Sources */,
 				13823A952A3C3AA50078B91A /* BottomSheet.swift in Sources */,
+				13823A9A2A3C57750078B91A /* CircularTimer.swift in Sources */,
 				13823A6B2A3C266B0078B91A /* QuizApplicationApp.swift in Sources */,
 				13823A8E2A3C29350078B91A /* Model.swift in Sources */,
 				13823A8C2A3C28780078B91A /* HomeView.swift in Sources */,

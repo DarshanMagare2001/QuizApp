@@ -9,9 +9,11 @@ import SwiftUI
 
 struct QuizView: View {
     @Environment(\.presentationMode) var presentationMode
+    @State var counter: Int = 0
+    var countTo: Int = 30
     var body: some View {
         
-        VStack{
+        VStack(spacing:10){
             HStack{
                 Button{
                     presentationMode.wrappedValue.dismiss()
@@ -25,11 +27,36 @@ struct QuizView: View {
                 Spacer()
             }
             
+            HStack{
+                Spacer()
+                Circle()
+                    .frame(width: 100, height: 100)
+                    .foregroundColor(.white)
+                    .overlay{
+                        ProgressTrack()
+                        ProgressBar(counter: counter, countTo: countTo)
+                        Clock(counter: counter, countTo: countTo)
+                    }
+                
+                Spacer()
+            }.frame(height:100)
             
+            VStack{
+                Text("darshan")
+                HStack{
+                    Spacer()
+                }
+            }.background(.red)
+                .cornerRadius(20)
+                .padding(.horizontal , 10)
             
             
             Spacer()
                 .navigationBarHidden(true)
+        }.onReceive(timer) { time in
+            if (self.counter < self.countTo) {
+                self.counter += 1
+            }
         }
         
     }
