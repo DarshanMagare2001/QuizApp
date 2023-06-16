@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 struct QuizView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -8,6 +9,7 @@ struct QuizView: View {
     @State var currentQuestionIndex = 0 // Track the current question index
     @State var selectedOption: Int?
     @State var isAnsweredCorrectly: Bool?
+    var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // Timer to track the counter
 
     var body: some View {
         VStack(spacing: 20) {
@@ -55,6 +57,7 @@ struct QuizView: View {
                                     isAnsweredCorrectly = nil // Reset answered correctly flag
                                     if currentQuestionIndex < quiz.count - 1 {
                                         currentQuestionIndex += 1
+                                        counter = 0 // Reset the timer when the question changes
                                     }
                                 }
                             }) {
