@@ -14,7 +14,7 @@ struct QuizView: View {
     
     var body: some View {
         VStack(spacing: 15) {
-            HStack {
+            HStack(spacing:20) {
                 Button {
                     presentationMode.wrappedValue.dismiss()
                 } label: {
@@ -105,7 +105,7 @@ struct QuizView: View {
                 Spacer()
                 HorizontalProgressBar(currentQuestionIndex: currentQuestionIndex, totalQuestions: quiz.count)
                 Spacer()
-            }.padding(.horizontal)
+            }.padding(5)
             
                 .navigationBarHidden(true)
         }
