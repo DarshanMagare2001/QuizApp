@@ -6,6 +6,7 @@ struct QuizView: View {
     @State var counter: Int = 0
     var countTo: Int = 30
     var quiz: [Quiz]
+    var totalQuestions: Int // Number of total questions
     @State var currentQuestionIndex = 0 // Track the current question index
     @State var selectedOption: Int?
     @State var isAnsweredCorrectly: Bool?
@@ -37,7 +38,7 @@ struct QuizView: View {
                     .foregroundColor(.white)
                     .overlay {
                         ProgressTrack()
-                        ProgressBar(counter: counter, countTo: countTo)
+                        ProgressBar(counter: counter, countTo: countTo, totalQuestions: totalQuestions)
                         Clock(counter: counter, countTo: countTo)
                     }
                 Spacer()
@@ -197,7 +198,33 @@ struct QuizView_Previews: PreviewProvider {
             Quiz(questionTitle: "Question 3", option1: "Option 1", option2: "Option 2", option3: "Option 3", option4: "Option 4", correctAns: "Option 4")
         ]
         
-        return QuizView(quiz: quizData)
+        return QuizView(quiz: quizData, totalQuestions: quizData.count)
     }
 }
 
+struct ProgressBar: View {
+    var counter: Int
+    var countTo: Int
+    var totalQuestions: Int
+
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                Rectangle()
+                    .foregroundColor(.gray)
+                    .frame(width: geometry.size.width, height: 10)
+                
+                Rectangle()
+                    .foregroundColor(.green)
+                    .frame(width: calculateProgressWidth(geometry: geometry), height: 10)
+            }
+        }
+    }
+
+    private func calculateProgressWidth(geometry: GeometryProxy) -> CGFloat {
+        let maxWidth = geometry.size.width
+        let progress = CGFloat(counter) / CGFloat(countTo)
+        let questionProgress = CGFloat(currentQuestionIndex) / CGFloat(totalQuestions)
+        return maxWidth * progress * questionProgress
+    }
+}
