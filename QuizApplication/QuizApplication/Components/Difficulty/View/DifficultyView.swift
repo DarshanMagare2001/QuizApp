@@ -26,6 +26,8 @@ struct DifficultyView: View {
                     Spacer()
                 }
                 
+                Spacer()
+                
                 VStack{
                     VStack{
                         HStack{
