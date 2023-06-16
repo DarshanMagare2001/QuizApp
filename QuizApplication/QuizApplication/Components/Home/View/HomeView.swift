@@ -2,8 +2,8 @@ import SwiftUI
 import SwiftUIBottomSheet
 struct HomeView: View {
     @State private var isShown = false
-    @State private var height: CGFloat = 300
-    @State private var requestedSize: CGFloat = 300
+    @State private var height: CGFloat = 250
+    @State private var requestedSize: CGFloat = 250
     
     var body: some View {
         ZStack {
@@ -77,9 +77,9 @@ struct HomeView: View {
                 }
                 .onValueChange(requestedSize) { sz in
                     if height < 220 && sz > 220 {
-                        height = 300
+                        height = 250
                     } else if height > 580 && sz < 580 {
-                        height = 300
+                        height = 250
                     }
                 }
             }
