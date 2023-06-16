@@ -1,7 +1,6 @@
 import SwiftUI
 import Combine
 
-
 struct QuizView: View {
     @Environment(\.presentationMode) var presentationMode
     @State var counter: Int = 0
@@ -65,17 +64,22 @@ struct QuizView: View {
                                         }
                                     }
                                 }) {
-                                    Text(quiz[currentQuestionIndex].getOption(for: optionIndex))
-                                        .font(.headline)
-                                        .foregroundColor(.black)
-                                        .padding(5)
-                                        .frame(maxWidth: .infinity)
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 10)
-                                                .fill(getButtonColor(optionIndex: optionIndex))
-                                                .opacity(getButtonOpacity(optionIndex: optionIndex))
-                                        )
-                                        .modifier(ConditionalBackgroundColorModifier(color: getButtonColor(optionIndex: optionIndex)))
+                                    HStack{
+                                        Text("\(optionIndex))")
+                                            .foregroundColor(.black)
+                                        Text(quiz[currentQuestionIndex].getOption(for: optionIndex))
+                                            .font(.headline)
+                                            .foregroundColor(.black)
+                                            .padding(5)
+                                            .frame(maxWidth: .infinity)
+                                            .background(
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .fill(getButtonColor(optionIndex: optionIndex))
+                                                    .opacity(getButtonOpacity(optionIndex: optionIndex))
+                                            )
+                                            .modifier(ConditionalBackgroundColorModifier(color: getButtonColor(optionIndex: optionIndex)))
+                                        Spacer()
+                                    }
                                 }
                                 .disabled(selectedOption != nil)
                             }
@@ -84,13 +88,10 @@ struct QuizView: View {
                         .padding(.vertical, 5)
                     }
                 }
-
-            
             }
             .padding(.horizontal, 10)
             
-            Spacer()
-                .navigationBarHidden(true)
+            Spacer().navigationBarHidden(true)
         }
         .onAppear {
             print(quiz)
@@ -113,18 +114,20 @@ struct QuizView: View {
     
     private func getButtonColor(optionIndex: Int) -> Color {
         if let isAnsweredCorrectly = isAnsweredCorrectly, isAnsweredCorrectly == false {
-            // Highlight the correct option in green and the selected wrong option in red
             let correctOptionIndex = quiz[currentQuestionIndex].getCorrectOptionIndex()
+            
             if optionIndex == correctOptionIndex {
                 return Color.green
-            }
-            else{
+            } else if optionIndex == selectedOption {
                 return Color.red
             }
         }
         
         return Color.clear
     }
+
+
+
     
     private func getButtonOpacity(optionIndex: Int) -> Double {
         if selectedOption != nil && optionIndex != selectedOption {
@@ -138,17 +141,18 @@ extension Quiz {
     func getOption(for index: Int) -> String {
         switch index {
         case 1:
-            return "A. \(option1 ?? "")"
+            return option1?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         case 2:
-            return "B. \(option2 ?? "")"
+            return option2?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         case 3:
-            return "C. \(option3 ?? "")"
+            return option3?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         case 4:
-            return "D. \(option4 ?? "")"
+            return option4?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         default:
             return ""
         }
     }
+
     
     func getCorrectOptionIndex() -> Int? {
         if let correctAnswer = correctAns {
@@ -189,3 +193,4 @@ struct QuizView_Previews: PreviewProvider {
         return QuizView(quiz: quizData)
     }
 }
+
