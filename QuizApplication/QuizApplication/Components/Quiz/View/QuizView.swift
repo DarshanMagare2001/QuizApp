@@ -12,7 +12,7 @@ struct QuizView: View {
     var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // Timer to track the counter
     
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 15) {
             HStack {
                 Button {
                     presentationMode.wrappedValue.dismiss()
@@ -39,13 +39,14 @@ struct QuizView: View {
                 Spacer()
             }.frame(height: 80)
             
-            VStack {
+            VStack(alignment:.leading){
                 HStack {
+                    Text("Q. \(quiz[currentQuestionIndex].questionTitle ?? "")") // Show the current question
                     Spacer()
                 }
                 ScrollView {
-                    VStack {
-                        Text("Q. \(quiz[currentQuestionIndex].questionTitle ?? "")") // Show the current question
+                    VStack(alignment:.leading) {
+                        
                         // Show the options for the current question
                         ForEach(1...4, id: \.self) { optionIndex in
                             Button(action: {
@@ -76,9 +77,8 @@ struct QuizView: View {
                             .disabled(selectedOption != nil) // Disable buttons once an option is selected
                         }
                     }
-                }
+                }.frame(width:.infinity)
             }
-            .cornerRadius(20)
             .padding(.horizontal, 10)
             
             Spacer()
