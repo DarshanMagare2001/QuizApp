@@ -43,20 +43,13 @@ struct QuizView: View {
                 Spacer()
             }.frame(height: 80)
             
-//            HStack{
-//                Spacer()
-//                ProgressBar()
-//                
-//                Spacer()
-//            }
-            
-            
+             
             VStack(alignment:.leading){
                 HStack {
                     Text("Q. \(quiz[currentQuestionIndex].questionTitle ?? "")") // Show the current question
                     Spacer()
                 }
-        
+                
                 VStack(alignment: .leading) {
                     ForEach(0..<2) { rowIndex in
                         HStack(spacing: 15) {
@@ -106,8 +99,15 @@ struct QuizView: View {
                 }
             }
             .padding(.horizontal, 10)
+     
+            Spacer()
+            HStack{
+                Spacer()
+                HorizontalProgressBar(currentQuestionIndex: currentQuestionIndex, totalQuestions: quiz.count)
+                Spacer()
+            }.padding(.horizontal)
             
-            Spacer().navigationBarHidden(true)
+                .navigationBarHidden(true)
         }
         .onAppear {
             print(quiz)
@@ -141,8 +141,8 @@ struct QuizView: View {
         
         return Color.clear
     }
-
-  
+    
+    
     private func getButtonOpacity(optionIndex: Int) -> Double {
         if selectedOption != nil && optionIndex != selectedOption {
             return 0.4
@@ -167,7 +167,7 @@ extension Quiz {
             return ""
         }
     }
-
+    
     
     func getCorrectOptionIndex() -> Int? {
         if let correctAnswer = correctAns {
@@ -209,3 +209,27 @@ struct QuizView_Previews: PreviewProvider {
     }
 }
 
+struct HorizontalProgressBar: View {
+    var currentQuestionIndex: Int
+    var totalQuestions: Int
+    
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                Rectangle()
+                    .foregroundColor(.gray)
+                    .frame(width: geometry.size.width, height: 10)
+                
+                Rectangle()
+                    .foregroundColor(.green)
+                    .frame(width: calculateProgressWidth(geometry: geometry), height: 10)
+            }
+        }
+    }
+    
+    private func calculateProgressWidth(geometry: GeometryProxy) -> CGFloat {
+        let maxWidth = geometry.size.width
+        let questionProgress = CGFloat(currentQuestionIndex) / CGFloat(totalQuestions)
+        return maxWidth * questionProgress
+    }
+}
