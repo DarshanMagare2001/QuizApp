@@ -11,6 +11,8 @@ struct QuizView: View {
     @Environment(\.presentationMode) var presentationMode
     @State var counter: Int = 0
     var countTo: Int = 30
+    var quiz : [Quiz]
+    
     var body: some View {
         
         VStack(spacing:20){
@@ -46,7 +48,10 @@ struct QuizView: View {
                     Spacer()
                 }
                 ScrollView{
-                    Text("Darshan")
+                    VStack{
+                       Text("Q.")
+                    }
+                 
                 }
             }.background(.red)
                 .cornerRadius(20)
@@ -55,7 +60,10 @@ struct QuizView: View {
             
             Spacer()
                 .navigationBarHidden(true)
-        }.onReceive(timer) { time in
+        }.onAppear{
+            print(quiz)
+        }
+         .onReceive(timer) { time in
             if (self.counter < self.countTo) {
                 self.counter += 1
             }
@@ -64,9 +72,9 @@ struct QuizView: View {
     }
 }
 
-struct QuizView_Previews: PreviewProvider {
-    static var previews: some View {
-        QuizView()
-            .environmentObject(QuizModelClass())
-    }
-}
+//struct QuizView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        QuizView( quiz: [Quiz(questionTitle: <#T##String#>, option4: <#T##String#>)])
+//            .environmentObject(QuizModelClass())
+//    }
+//}

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DifficultyView: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var viewModel : QuizModelClass
     var body: some View {
         ZStack{
             BubbleView()
@@ -43,15 +44,15 @@ struct DifficultyView: View {
                         
                         HStack{
                             Spacer()
-                            
-                            NavigationLink(destination: QuizView()) {
-                                Text("Start Quiz!")
-                                    .font(.headline)
-                                    .foregroundColor(.black)
-                                    .bold()
-                                    .padding(5)
+                            if let data = viewModel.quizModelArray {
+                                NavigationLink(destination: QuizView(quiz: data[0].quiz)) {
+                                    Text("Start Quiz!")
+                                        .font(.headline)
+                                        .foregroundColor(.black)
+                                        .bold()
+                                        .padding(5)
+                                }
                             }
-                            
                             Spacer()
                             
                         }.background(.green)
@@ -78,12 +79,14 @@ struct DifficultyView: View {
                         
                         HStack{
                             Spacer()
-                            NavigationLink(destination: QuizView()) {
-                                Text("Start Quiz!")
-                                    .font(.headline)
-                                    .foregroundColor(.black)
-                                    .bold()
-                                    .padding(5)
+                            if let data = viewModel.quizModelArray {
+                                NavigationLink(destination: QuizView(quiz: data[1].quiz)) {
+                                    Text("Start Quiz!")
+                                        .font(.headline)
+                                        .foregroundColor(.black)
+                                        .bold()
+                                        .padding(5)
+                                }
                             }
                             Spacer()
                             
@@ -111,12 +114,14 @@ struct DifficultyView: View {
                         
                         HStack{
                             Spacer()
-                            NavigationLink(destination: QuizView()) {
-                                Text("Start Quiz!")
-                                    .font(.headline)
-                                    .foregroundColor(.black)
-                                    .bold()
-                                    .padding(5)
+                            if let data = viewModel.quizModelArray {
+                                NavigationLink(destination: QuizView(quiz: data[2].quiz)) {
+                                    Text("Start Quiz!")
+                                        .font(.headline)
+                                        .foregroundColor(.black)
+                                        .bold()
+                                        .padding(5)
+                                }
                             }
                             Spacer()
                             
