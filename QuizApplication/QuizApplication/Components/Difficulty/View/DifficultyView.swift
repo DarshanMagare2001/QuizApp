@@ -25,7 +25,97 @@ struct DifficultyView: View {
                     }
                     Spacer()
                 }
-                Spacer()
+                
+                VStack{
+                    VStack{
+                        HStack{
+                            Spacer()
+                            Text("Easy")
+                                .font(.largeTitle)
+                                .foregroundColor(.white)
+                            Spacer()
+                        }.background(.blue)
+                        
+                        HStack{
+                            Spacer()
+                            Button{
+                                
+                            }label: {
+                                Text("Start Quiz!")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                
+                            }
+                            Spacer()
+                            
+                        }.background(.green)
+                        
+                    }.cornerRadius(20)
+                        .padding(.horizontal , 20)
+                    
+                    Spacer()
+                    
+                    VStack{
+                        HStack{
+                            Spacer()
+                            Text("Normal")
+                                .font(.largeTitle)
+                                .foregroundColor(.white)
+                            Spacer()
+                        }.background(.blue)
+                        
+                        HStack{
+                            Spacer()
+                            Button{
+                                
+                            }label: {
+                                Text("Start Quiz!")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                
+                            }
+                            Spacer()
+                            
+                        }.background(.green)
+                        
+                    }.cornerRadius(20)
+                        .padding(.horizontal , 20)
+
+                    Spacer()
+                    
+                    VStack{
+                        HStack{
+                            Spacer()
+                            Text("Hard")
+                                .font(.largeTitle)
+                                .foregroundColor(.white)
+                            Spacer()
+                        }.background(.blue)
+                        
+                        HStack{
+                            Spacer()
+                            Button{
+                                
+                            }label: {
+                                Text("Start Quiz!")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                
+                            }
+                            Spacer()
+                            
+                        }.background(.green)
+                        
+                    }.cornerRadius(20)
+                        .padding(.horizontal , 20)
+                    
+                    
+                    
+                    
+                    
+
+                }
+                 Spacer()
             }
             .navigationBarHidden(true)
         }
