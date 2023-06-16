@@ -176,3 +176,17 @@ struct ConditionalBackgroundColorModifier: ViewModifier {
             .foregroundColor(color.opacity(color == Color.clear ? 0 : 1))
     }
 }
+
+
+
+struct QuizView_Previews: PreviewProvider {
+    static var previews: some View {
+        let quizData = [
+            Quiz(questionTitle: "Question 1", option1: "Option 1", option2: "Option 2", option3: "Option 3", option4: "Option 4", correctAns: "Option 1"),
+            Quiz(questionTitle: "Question 2", option1: "Option 1", option2: "Option 2", option3: "Option 3", option4: "Option 4", correctAns: "Option 3"),
+            Quiz(questionTitle: "Question 3", option1: "Option 1", option2: "Option 2", option3: "Option 3", option4: "Option 4", correctAns: "Option 4")
+        ]
+        
+        return QuizView(quiz: quizData)
+    }
+}
