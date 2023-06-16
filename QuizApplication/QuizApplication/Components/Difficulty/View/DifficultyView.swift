@@ -39,7 +39,7 @@ struct DifficultyView: View {
                                 .foregroundColor(.white)
                             
                             Spacer()
-                        }.background(.blue)
+                        }.background(.purple)
                         
                         HStack{
                             Spacer()
@@ -59,6 +59,8 @@ struct DifficultyView: View {
                     }.background(.white)
                         .cornerRadius(20)
                         .padding(.horizontal , 20)
+                        .shadow(color: .black, radius: 10)
+                    
                     
                     Spacer()
                     
@@ -72,7 +74,7 @@ struct DifficultyView: View {
                                 .foregroundColor(.white)
                             
                             Spacer()
-                        }.background(.blue)
+                        }.background(.pink)
                         
                         HStack{
                             Spacer()
@@ -85,11 +87,13 @@ struct DifficultyView: View {
                             }
                             Spacer()
                             
-                        }.background(.green)
+                        }.background(.yellow)
                         
                     }.background(.white)
                         .cornerRadius(20)
                         .padding(.horizontal , 20)
+                        .shadow(color: .black, radius: 10)
+                    
                     
                     Spacer()
                     
@@ -116,11 +120,13 @@ struct DifficultyView: View {
                             }
                             Spacer()
                             
-                        }.background(.green)
+                        }.background(.red)
                         
                     }.background(.white)
                         .cornerRadius(20)
                         .padding(.horizontal , 20)
+                        .shadow(color: .black, radius: 10)
+                    
                     
                     
                     
