@@ -23,9 +23,48 @@ struct BottomSheet: View {
               Spacer()
           }.padding(.vertical , 5)
           
+          HStack{
+              Spacer()
+              VStack(alignment:.leading , spacing: 5){
+                  HStack{
+                      Text("1)")
+                      Text("Each question have timer so attend questions according it.")
+                          .font(.caption)
+                      Spacer()
+                  }
+                  HStack{
+                      Text("2)")
+                      Text("You cant submit quiz without attending all questions.")
+                          .font(.caption)
+                      Spacer()
+                  }
+                  HStack{
+                      Text("3)")
+                      Text("This is MCQ's based quiz so you have four option from which you have to choose one correct option.")
+                          .font(.caption)
+                      Spacer()
+                  }
+                  HStack{
+                      Text("4)")
+                      Text("Questions will coming randomly one at a time.")
+                          .font(.caption)
+                      Spacer()
+                  }
+                  HStack{
+                      Text("5)")
+                      Text("Feedback will be provided after submission of quiz.")
+                          .font(.caption)
+                      Spacer()
+                  }
+                  
+                  
+                  
+              }
+              Spacer()
+          }
+             
           Spacer()
-          
-          
+           
       }
     }
 }
