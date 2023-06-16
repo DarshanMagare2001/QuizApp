@@ -1,6 +1,7 @@
 import SwiftUI
 import Combine
 
+
 struct QuizView: View {
     @Environment(\.presentationMode) var presentationMode
     @State var counter: Int = 0
@@ -44,40 +45,47 @@ struct QuizView: View {
                     Text("Q. \(quiz[currentQuestionIndex].questionTitle ?? "")") // Show the current question
                     Spacer()
                 }
-                ScrollView {
-                    VStack(alignment:.leading) {
-                        
-                        // Show the options for the current question
-                        ForEach(1...4, id: \.self) { optionIndex in
-                            Button(action: {
-                                selectedOption = optionIndex // Set selected option
-                                isAnsweredCorrectly = quiz[currentQuestionIndex].getOption(for: optionIndex) == quiz[currentQuestionIndex].correctAns // Compare selected option with correct answer
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                    // After 2 seconds, move to the next question
-                                    selectedOption = nil // Reset selected option
-                                    isAnsweredCorrectly = nil // Reset answered correctly flag
-                                    if currentQuestionIndex < quiz.count - 1 {
-                                        currentQuestionIndex += 1
-                                        counter = 0 // Reset the timer when the question changes
+        
+                VStack(alignment: .leading) {
+                    ForEach(0..<2) { rowIndex in
+                        HStack(spacing: 15) {
+                            ForEach(0..<2) { columnIndex in
+                                let optionIndex = (rowIndex * 2) + columnIndex + 1
+                                Button(action: {
+                                    selectedOption = optionIndex // Set the selected option
+                                    isAnsweredCorrectly = quiz[currentQuestionIndex].getOption(for: optionIndex) == quiz[currentQuestionIndex].correctAns
+                                    
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                        // After 1 second, move to the next question
+                                        selectedOption = nil // Reset the selected option
+                                        isAnsweredCorrectly = nil // Reset the answered correctly flag
+                                        if currentQuestionIndex < quiz.count - 1 {
+                                            currentQuestionIndex += 1
+                                            counter = 0 // Reset the timer when the question changes
+                                        }
                                     }
+                                }) {
+                                    Text(quiz[currentQuestionIndex].getOption(for: optionIndex))
+                                        .font(.headline)
+                                        .foregroundColor(.black)
+                                        .padding(5)
+                                        .frame(maxWidth: .infinity)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .fill(getButtonColor(optionIndex: optionIndex))
+                                                .opacity(getButtonOpacity(optionIndex: optionIndex))
+                                        )
+                                        .modifier(ConditionalBackgroundColorModifier(color: getButtonColor(optionIndex: optionIndex)))
                                 }
-                            }) {
-                                Text(quiz[currentQuestionIndex].getOption(for: optionIndex))
-                                    .font(.headline)
-                                    .foregroundColor(.black)
-                                    .padding(5)
-                                    .background(
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .fill(getButtonColor(optionIndex: optionIndex))
-                                            .opacity(getButtonOpacity(optionIndex: optionIndex))
-                                    )
-                                    .modifier(ConditionalBackgroundColorModifier(color: getButtonColor(optionIndex: optionIndex)))
-                                
+                                .disabled(selectedOption != nil)
                             }
-                            .disabled(selectedOption != nil) // Disable buttons once an option is selected
                         }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 5)
                     }
-                }.frame(width:.infinity)
+                }
+
+            
             }
             .padding(.horizontal, 10)
             
@@ -115,15 +123,8 @@ struct QuizView: View {
             }
         }
         
-        
         return Color.clear
     }
-    
-    
-    
-    
-    
-    
     
     private func getButtonOpacity(optionIndex: Int) -> Double {
         if selectedOption != nil && optionIndex != selectedOption {
@@ -176,8 +177,6 @@ struct ConditionalBackgroundColorModifier: ViewModifier {
             .foregroundColor(color.opacity(color == Color.clear ? 0 : 1))
     }
 }
-
-
 
 struct QuizView_Previews: PreviewProvider {
     static var previews: some View {
