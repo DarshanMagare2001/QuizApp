@@ -161,7 +161,7 @@ struct CircularProgressBar: View {
                     .font(.headline)
                     .foregroundColor(.white)
             }
-            .frame(width: 200, height: 200)
+            .frame(width: 100, height: 100)
         }
         .onAppear {
             let progressValue = CGFloat(score) / CGFloat(totalQuestions)
