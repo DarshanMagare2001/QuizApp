@@ -8,11 +8,11 @@
 import Foundation
 import SwiftUI
 
-let timer = Timer
+let timerForCircularProgressbarForQuiz = Timer
     .publish(every: 1, on: .main, in: .common)
     .autoconnect()
 
-struct Clock: View {
+struct ClockForCircularProgressbarForQuiz: View {
     var counter: Int
     var countTo: Int
     
@@ -33,7 +33,7 @@ struct Clock: View {
     }
 }
 
-struct ProgressTrack: View {
+struct ProgressTrackForCircularProgressbarForQuiz: View {
     var body: some View {
         Circle()
             .fill(Color.clear)
@@ -44,7 +44,7 @@ struct ProgressTrack: View {
     }
 }
 
-struct ProgressBar: View {
+struct ProgressBarForCircularProgressbarForQuiz: View {
     var counter: Int
     var countTo: Int
     

@@ -37,14 +37,14 @@ struct QuizView: View {
                     .frame(width: 80, height: 80)
                     .foregroundColor(.white)
                     .overlay {
-                        ProgressTrack()
-                        ProgressBar(counter: counter, countTo: countTo)
-                        Clock(counter: counter, countTo: countTo)
+                        ProgressTrackForCircularProgressbarForQuiz()
+                        ProgressBarForCircularProgressbarForQuiz(counter: counter, countTo: countTo)
+                        ClockForCircularProgressbarForQuiz(counter: counter, countTo: countTo)
                     }
                 Spacer()
             }.frame(height: 80)
             
-             
+            
             VStack(alignment:.leading){
                 HStack {
                     Text("Q. \(quiz[currentQuestionIndex].questionTitle ?? "")") // Show the current question
@@ -104,7 +104,7 @@ struct QuizView: View {
                 }
             }
             .padding(.horizontal, 10)
-     
+            
             Spacer()
             HStack{
                 Spacer()
@@ -280,10 +280,7 @@ struct FeedbackSheet: View {
     }
     
     private func dismissSheet() {
-        // Delay the sheet dismissal to allow time for the user to see the score
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.presentationMode.wrappedValue.dismiss()
-        }
+        self.presentationMode.wrappedValue.dismiss()
     }
 }
 
