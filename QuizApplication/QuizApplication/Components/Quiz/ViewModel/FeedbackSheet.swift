@@ -28,63 +28,65 @@ struct FeedbackSheet: View {
                     .modifier(ParticlesModifier())
                     .offset(x: 60, y: 70)
             }
-            
-            VStack {
-                
-                Text("Quiz Finished")
-                    .font(.title)
-                    .padding(.top, 20)
-                
-                Spacer()
-                
+            ScrollView{
                 VStack {
-                    CircularProgressBar(score: score, totalQuestions: totalQuestions)
-                }
-                
-                Spacer()
-                
-                VStack {
-                    Text(feedbackMessage(score: score))
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 20)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                }
-                
-                Spacer()
-                
-                VStack {
-                    Text("Leaderboard")
-                        .font(.headline)
-                        .foregroundColor(.white)
+                    
+                    Text("Quiz Finished")
+                        .font(.title)
                         .padding(.top, 20)
                     
-                    Text("Highest Score: \(highestScore)")
-                        .font(.subheadline)
-                        .foregroundColor(.white)
+                    Spacer()
+                    
+                    VStack {
+                        CircularProgressBar(score: score, totalQuestions: totalQuestions)
+                    }
+                    
+                    Spacer()
+                    
+                    VStack {
+                        Text(feedbackMessage(score: score))
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding(.vertical, 10)
+                            .padding(.horizontal, 20)
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    }
+                    
+                    Spacer()
+                    
+                    VStack {
+                        Text("Leaderboard")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding(.top, 20)
+                        
+                        Text("Highest Score: \(highestScore)")
+                            .font(.subheadline)
+                            .foregroundColor(.white)
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        // Dismiss the feedback sheet and go back
+                        dismissSheet()
+                        viewModel.dismiss.toggle()
+                    }) {
+                        Text("Close")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding(.vertical, 10)
+                            .padding(.horizontal, 20)
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    }
+                    
+                    Spacer()
                 }
-                
-                Spacer()
-                
-                Button(action: {
-                    // Dismiss the feedback sheet and go back
-                    dismissSheet()
-                    viewModel.dismiss.toggle()
-                }) {
-                    Text("Close")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 20)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                }
-                
-                Spacer()
+                .padding()
             }
-            .padding()
+          
         }
         .foregroundColor(.yellow)
         .onAppear {

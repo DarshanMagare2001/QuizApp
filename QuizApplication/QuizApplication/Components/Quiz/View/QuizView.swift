@@ -103,6 +103,8 @@ struct QuizView: View {
                 .padding(.horizontal, 10)
             }
             
+            Spacer()
+            
             VStack(alignment: .center) {
                 ForEach(0..<2) { rowIndex in
                     HStack(spacing: 15) {
