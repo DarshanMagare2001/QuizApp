@@ -28,7 +28,13 @@ struct HorizontalProgressBar: View {
     
     private func calculateProgressWidth(geometry: GeometryProxy) -> CGFloat {
         let maxWidth = geometry.size.width
-        let questionProgress = CGFloat(currentQuestionIndex) / CGFloat(totalQuestions)
-        return maxWidth * questionProgress
+        
+        if currentQuestionIndex >= totalQuestions {
+            return maxWidth // Return full width if the last question is attended
+        } else {
+            let questionProgress = CGFloat(currentQuestionIndex) / CGFloat(totalQuestions)
+            return maxWidth * questionProgress
+        }
     }
 }
+
