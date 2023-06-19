@@ -161,11 +161,14 @@ struct QuizView: View {
                 } else {
                     return Color.red
                 }
+            } else if optionIndex == quiz[currentQuestionIndex].getCorrectOptionIndex() {
+                return Color.green.opacity(0.4)
             }
         }
         
         return Color.clear
     }
+
     
     
     private func getButtonOpacity(optionIndex: Int) -> Double {
