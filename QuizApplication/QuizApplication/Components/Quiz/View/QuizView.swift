@@ -218,69 +218,7 @@ struct QuizView_Previews: PreviewProvider {
     }
 }
 
-struct HorizontalProgressBar: View {
-    var currentQuestionIndex: Int
-    var totalQuestions: Int
-    
-    var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .leading) {
-                Rectangle()
-                    .foregroundColor(.gray)
-                    .frame(width: geometry.size.width, height: 10)
-                
-                Rectangle()
-                    .foregroundColor(.green)
-                    .frame(width: calculateProgressWidth(geometry: geometry), height: 10)
-            }
-        }
-    }
-    
-    private func calculateProgressWidth(geometry: GeometryProxy) -> CGFloat {
-        let maxWidth = geometry.size.width
-        let questionProgress = CGFloat(currentQuestionIndex) / CGFloat(totalQuestions)
-        return maxWidth * questionProgress
-    }
-}
 
-struct FeedbackSheet: View {
-    @Environment(\.presentationMode) var presentationMode
-    var score: Int
-    var totalQuestions: Int
-    
-    var body: some View {
-        VStack {
-            Text("Quiz Finished")
-                .font(.title)
-                .padding(.top, 20)
-            
-            Spacer()
-            
-            Text("Score: \(score)/\(totalQuestions)")
-                .font(.headline)
-            
-            Spacer()
-            
-            Button(action: {
-                // Dismiss the feedback sheet and go back
-                dismissSheet()
-            }) {
-                Text("Close")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 20)
-                    .background(Color.blue)
-                    .cornerRadius(10)
-            }
-            
-            Spacer()
-        }
-        .padding()
-    }
-    
-    private func dismissSheet() {
-        self.presentationMode.wrappedValue.dismiss()
-    }
-}
+
+
 
