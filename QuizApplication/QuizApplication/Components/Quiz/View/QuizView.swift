@@ -31,7 +31,28 @@ struct QuizView: View {
                 Spacer()
                 
                 HStack{
+                    
                     Spacer()
+                    
+                    VStack{
+                        if let isAnsweredCorrectly = isAnsweredCorrectly, let selectedOption = selectedOption {
+                            if isAnsweredCorrectly {
+                                Text("Correct ans")
+                                    .font(.caption)
+                                    .padding(10)
+                                    .background(.green)
+                                    .cornerRadius(20)
+                                
+                            } else {
+                                Text("Wrong ans")
+                                    .font(.caption)
+                                    .padding(10)
+                                    .background(.red)
+                                    .cornerRadius(20)
+                            }
+                        }
+                    }
+                    
                     Text("Score: \(score)")
                         .font(.title)
                         .padding(10)
@@ -66,7 +87,7 @@ struct QuizView: View {
                 }
                 HStack{
                     Text("Q. \(quiz[currentQuestionIndex].questionTitle ?? "")")
-                        .font(.subheadline)
+                        .font(.headline)
                         .bold()
                         .fixedSize(horizontal: false, vertical: true)
                     Spacer()
@@ -105,7 +126,7 @@ struct QuizView: View {
                                     Text("\(optionIndex))")
                                         .foregroundColor(.black)
                                     Text(quiz[currentQuestionIndex].getOption(for: optionIndex))
-                                        .font(.caption)
+                                        .font(.subheadline)
                                         .bold()
                                         .foregroundColor(.black)
                                         .fixedSize(horizontal: false, vertical: true)
@@ -129,40 +150,13 @@ struct QuizView: View {
                 .padding(.horizontal , 10)
             
             Spacer()
-            HStack {
-                Spacer()
-                if let isAnsweredCorrectly = isAnsweredCorrectly, let selectedOption = selectedOption {
-                    if isAnsweredCorrectly {
-                        Text("Correct ans")
-                            .font(.caption)
-                            .padding(.horizontal , 50)
-                            .padding(.vertical , 2)
-                            .background(.green)
-                            .cornerRadius(20)
-                        
-                    } else {
-                        Text("Wrong ans")
-                            .font(.caption)
-                            .padding(.horizontal , 50)
-                            .padding(.vertical , 2)
-                            .background(.red)
-                            .cornerRadius(20)
-                    }
-                }
-                Spacer()
-            }.frame(height:10)
-                .padding(.horizontal, 10)
-            
-            
-            
-            Spacer()
                 .padding(.horizontal , 10)
                 .navigationBarHidden(true)
         }.onChange(of: viewModel.dismiss, perform: { _ in
-          
-                presentationMode.wrappedValue.dismiss()
-          
-         })
+            
+            presentationMode.wrappedValue.dismiss()
+            
+        })
             .sheet(isPresented: $showFeedbackSheet) {
                 FeedbackSheet(score: score, totalQuestions: quiz.count)
                 
