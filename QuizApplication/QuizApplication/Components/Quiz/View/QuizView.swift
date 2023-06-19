@@ -13,6 +13,7 @@ struct QuizView: View {
     @State var score = 0 // Track the score count
     var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // Timer to track the counter
     @State var showFeedbackSheet = false
+  
     
     
     var body: some View {

@@ -10,6 +10,7 @@ import SwiftUI
 struct DifficultyView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewModel: QuizModelClass
+    @State private var isSpinning = false
     
     var body: some View {
         ZStack {
@@ -28,7 +29,7 @@ struct DifficultyView: View {
                     }
                     Spacer()
                 }
-               
+                
                 VStack {
                     VStack {
                         VStack{
@@ -40,11 +41,12 @@ struct DifficultyView: View {
                                     .bold()
                                     .foregroundColor(.white)
                                 
+                                
                                 Spacer()
                             }
                             
                             Spacer()
-                        }.background(.purple)
+                        }.background(.green)
                         
                         HStack {
                             Spacer()
@@ -59,7 +61,7 @@ struct DifficultyView: View {
                             }
                             Spacer()
                         }
-                        .background(.green)
+                        .background(.purple)
                     }
                     .background(.white)
                     .cornerRadius(20)
@@ -82,7 +84,7 @@ struct DifficultyView: View {
                             }
                             
                             Spacer()
-                        }.background(.purple)
+                        }.background(.yellow)
                         
                         HStack {
                             Spacer()
@@ -97,7 +99,7 @@ struct DifficultyView: View {
                             }
                             Spacer()
                         }
-                        .background(.yellow)
+                        .background(.purple)
                     }
                     .background(.white)
                     .cornerRadius(20)
@@ -120,7 +122,7 @@ struct DifficultyView: View {
                             }
                             
                             Spacer()
-                        } .background(.purple)
+                        } .background(.red)
                         
                         HStack {
                             Spacer()
@@ -135,7 +137,7 @@ struct DifficultyView: View {
                             }
                             Spacer()
                         }
-                        .background(.red)
+                        .background(.purple)
                     }
                     .background(.white)
                     .cornerRadius(20)
@@ -155,3 +157,7 @@ struct DifficultyView_Previews: PreviewProvider {
         DifficultyView()
     }
 }
+
+
+
+
