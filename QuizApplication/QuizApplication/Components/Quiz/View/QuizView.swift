@@ -3,6 +3,7 @@ import Combine
 
 struct QuizView: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var viewModel : QuizModelClass
     @State var counter: Int = 0
     var countTo: Int = 30
     var quiz: [Quiz]
@@ -12,6 +13,7 @@ struct QuizView: View {
     @State var score = 0 // Track the score count
     var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // Timer to track the counter
     @State var showFeedbackSheet = false
+    
     
     var body: some View {
         VStack {
@@ -155,28 +157,30 @@ struct QuizView: View {
             Spacer()
                 .padding(.horizontal , 10)
                 .navigationBarHidden(true)
-        }
-        .onAppear {
-            print(quiz)
-        }
-        .sheet(isPresented: $showFeedbackSheet) {
-            FeedbackSheet(score: score, totalQuestions: quiz.count)
-        }
-        .onReceive(timer) { time in
-            if self.counter < self.countTo {
-                self.counter += 1
-            } else {
-                // Timer finished for the current question
-                if self.currentQuestionIndex < self.quiz.count - 1 {
-                    self.currentQuestionIndex += 1 // Move to the next question
-                    self.counter = 0 // Reset the timer
+        }.onChange(of: viewModel.dismiss, perform: { _ in
+          
+                presentationMode.wrappedValue.dismiss()
+          
+         })
+            .sheet(isPresented: $showFeedbackSheet) {
+                FeedbackSheet(score: score, totalQuestions: quiz.count)
+                
+            }
+            .onReceive(timer) { time in
+                if self.counter < self.countTo {
+                    self.counter += 1
                 } else {
-                    // All questions finished, show feedback sheet
-                    self.showFeedbackSheet = true
-                    self.timer.upstream.connect().cancel() // Stop the timer
+                    // Timer finished for the current question
+                    if self.currentQuestionIndex < self.quiz.count - 1 {
+                        self.currentQuestionIndex += 1 // Move to the next question
+                        self.counter = 0 // Reset the timer
+                    } else {
+                        // All questions finished, show feedback sheet
+                        self.showFeedbackSheet = true
+                        self.timer.upstream.connect().cancel() // Stop the timer
+                    }
                 }
             }
-        }
     }
     
     private func getButtonColor(optionIndex: Int) -> Color {

@@ -24,9 +24,10 @@ struct Quiz: Codable {
 class QuizModelClass : ObservableObject {
     
     @Published  var quizModelArray = [QuizModel]()
+    @Published  var dismiss = false
     
     init(){
-       
+        
         fetchData { data in
             self.quizModelArray = data
         }
@@ -43,7 +44,7 @@ class QuizModelClass : ObservableObject {
                     if let safeData = data{
                         
                         let str = String(decoding: safeData, as: UTF8.self)
-//                        print(str)
+                        //                        print(str)
                         do{
                             let results =   try  decoder.decode([QuizModel].self , from: safeData)
                             
@@ -58,6 +59,6 @@ class QuizModelClass : ObservableObject {
             task.resume()
         }
     }
-     
+    
     
 }

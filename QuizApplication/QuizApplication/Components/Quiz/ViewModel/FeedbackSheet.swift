@@ -8,10 +8,15 @@
 import Foundation
 import SwiftUI
 
+
+
+
 struct FeedbackSheet: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var viewModel : QuizModelClass
     var score: Int
     var totalQuestions: Int
+ 
     
     var body: some View {
         ZStack {
@@ -59,6 +64,8 @@ struct FeedbackSheet: View {
                 Button(action: {
                     // Dismiss the feedback sheet and go back
                     dismissSheet()
+                    viewModel.dismiss.toggle()
+                   
                 }) {
                     Text("Close")
                         .font(.headline)
