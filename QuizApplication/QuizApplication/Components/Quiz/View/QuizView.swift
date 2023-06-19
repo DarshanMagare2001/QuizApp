@@ -1,9 +1,10 @@
 import SwiftUI
 import Combine
 
+
 struct QuizView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var viewModel : QuizModelClass
+    @EnvironmentObject var viewModel: QuizModelClass
     @State var counter: Int = 0
     var countTo: Int = 30
     var quiz: [Quiz]
@@ -13,9 +14,13 @@ struct QuizView: View {
     @State var score = 0 // Track the score count
     var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // Timer to track the counter
     @State var showFeedbackSheet = false
-    
-    
-    
+    @State var shuffledQuiz: [Quiz] // Shuffled array to store randomized questions
+
+    init(quiz: [Quiz]) {
+        self.quiz = quiz
+        self._shuffledQuiz = State(initialValue: quiz.shuffled()) // Shuffle the quiz array
+    }
+  
     var body: some View {
         VStack {
             HStack {
@@ -43,7 +48,6 @@ struct QuizView: View {
                                     .padding(10)
                                     .background(.green)
                                     .cornerRadius(20)
-                                
                             } else {
                                 Text("Wrong ans")
                                     .font(.caption)
@@ -62,8 +66,9 @@ struct QuizView: View {
                     
                 }.padding(5)
             }
-            VStack(spacing:5){
-                VStack(spacing:15){
+            
+            VStack(spacing: 5) {
+                VStack(spacing: 15) {
                     HStack {
                         Spacer()
                         Circle()
@@ -77,23 +82,25 @@ struct QuizView: View {
                             }
                         
                         Spacer()
-                    }.frame(height: 80)
+                    }
+                    .frame(height: 80)
                     
-                    HStack{
+                    HStack {
                         Spacer()
                         HorizontalProgressBar(currentQuestionIndex: currentQuestionIndex, totalQuestions: quiz.count)
-                            .frame(height:10)
+                            .frame(height: 10)
                         Spacer()
                     }
                 }
-                HStack{
-                    Text("Q. \(quiz[currentQuestionIndex].questionTitle ?? "")")
+                
+                HStack {
+                    Text("Q. \(shuffledQuiz[currentQuestionIndex].questionTitle ?? "")")
                         .font(.headline)
                         .bold()
                         .fixedSize(horizontal: false, vertical: true)
                     Spacer()
-                }.padding(.horizontal , 10)
-                
+                }
+                .padding(.horizontal, 10)
             }
             
             VStack(alignment: .center) {
@@ -103,7 +110,7 @@ struct QuizView: View {
                             let optionIndex = (rowIndex * 2) + columnIndex + 1
                             Button(action: {
                                 selectedOption = optionIndex // Set the selected option
-                                isAnsweredCorrectly = quiz[currentQuestionIndex].getOption(for: optionIndex) == quiz[currentQuestionIndex].correctAns
+                                isAnsweredCorrectly = shuffledQuiz[currentQuestionIndex].getOption(for: optionIndex) == shuffledQuiz[currentQuestionIndex].correctAns
                                 
                                 if isAnsweredCorrectly == true {
                                     score += 1 // Increment the score if answered correctly
@@ -113,7 +120,7 @@ struct QuizView: View {
                                     // After 1 second, move to the next question or show feedback sheet
                                     selectedOption = nil // Reset the selected option
                                     isAnsweredCorrectly = nil // Reset the answered correctly flag
-                                    if currentQuestionIndex < quiz.count - 1 {
+                                    if currentQuestionIndex < shuffledQuiz.count - 1 {
                                         currentQuestionIndex += 1
                                         counter = 0 // Reset the timer when the question changes
                                     } else {
@@ -123,10 +130,10 @@ struct QuizView: View {
                                     }
                                 }
                             }) {
-                                HStack{
+                                HStack {
                                     Text("\(optionIndex))")
                                         .foregroundColor(.black)
-                                    Text(quiz[currentQuestionIndex].getOption(for: optionIndex))
+                                    Text(shuffledQuiz[currentQuestionIndex].getOption(for: optionIndex))
                                         .font(.subheadline)
                                         .bold()
                                         .foregroundColor(.black)
@@ -145,38 +152,36 @@ struct QuizView: View {
                         }
                     }
                     .frame(maxWidth: .infinity)
-                    
                 }
-            }.padding(.bottom, 5)
-                .padding(.horizontal , 10)
+            }
+            .padding(.bottom, 5)
+            .padding(.horizontal, 10)
             
             Spacer()
-                .padding(.horizontal , 10)
+                .padding(.horizontal, 10)
                 .navigationBarHidden(true)
-        }.onChange(of: viewModel.dismiss, perform: { _ in
-            
+        }
+        .onChange(of: viewModel.dismiss, perform: { _ in
             presentationMode.wrappedValue.dismiss()
-            
         })
-            .fullScreenCover(isPresented: $showFeedbackSheet) {
-                FeedbackSheet(score: score, totalQuestions: quiz.count)
-            }
-        
-            .onReceive(timer) { time in
-                if self.counter < self.countTo {
-                    self.counter += 1
+        .fullScreenCover(isPresented: $showFeedbackSheet) {
+            FeedbackSheet(score: score, totalQuestions: shuffledQuiz.count)
+        }
+        .onReceive(timer) { time in
+            if counter < countTo {
+                counter += 1
+            } else {
+                // Timer finished for the current question
+                if currentQuestionIndex < shuffledQuiz.count - 1 {
+                    currentQuestionIndex += 1 // Move to the next question
+                    counter = 0 // Reset the timer
                 } else {
-                    // Timer finished for the current question
-                    if self.currentQuestionIndex < self.quiz.count - 1 {
-                        self.currentQuestionIndex += 1 // Move to the next question
-                        self.counter = 0 // Reset the timer
-                    } else {
-                        // All questions finished, show feedback sheet
-                        self.showFeedbackSheet = true
-                        self.timer.upstream.connect().cancel() // Stop the timer
-                    }
+                    // All questions finished, show feedback sheet
+                    showFeedbackSheet = true
+                    timer.upstream.connect().cancel() // Stop the timer
                 }
             }
+        }
     }
     
     private func getButtonColor(optionIndex: Int) -> Color {
@@ -187,15 +192,13 @@ struct QuizView: View {
                 } else {
                     return Color.red
                 }
-            } else if optionIndex == quiz[currentQuestionIndex].getCorrectOptionIndex() {
+            } else if optionIndex == shuffledQuiz[currentQuestionIndex].getCorrectOptionIndex() {
                 return Color.green.opacity(0.4)
             }
         }
         
         return Color.clear
     }
-    
-    
     
     private func getButtonOpacity(optionIndex: Int) -> Double {
         if selectedOption != nil && optionIndex != selectedOption {
@@ -204,7 +207,6 @@ struct QuizView: View {
         return 1.0
     }
 }
-
 
 extension Quiz {
     func getOption(for index: Int) -> String {
@@ -222,10 +224,9 @@ extension Quiz {
         }
     }
     
-    
-    func getCorrectOptionIndex() -> Int? {
-        if let correctAnswer = correctAns {
-            switch correctAnswer {
+    func getCorrectOptionIndex() -> Int {
+        if let correctAns = correctAns {
+            switch correctAns {
             case option1:
                 return 1
             case option2:
@@ -235,12 +236,13 @@ extension Quiz {
             case option4:
                 return 4
             default:
-                return nil
+                return 0
             }
         }
-        return nil
+        return 0
     }
 }
+
 
 struct ConditionalBackgroundColorModifier: ViewModifier {
     let color: Color
