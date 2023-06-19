@@ -126,6 +126,21 @@ struct QuizView: View {
             }.padding(.bottom, 5)
                 .padding(.horizontal , 10)
             
+            HStack {
+                Spacer()
+                if let isAnsweredCorrectly = isAnsweredCorrectly, let selectedOption = selectedOption {
+                    if isAnsweredCorrectly {
+                        Text("Correct ans")
+                    } else {
+                        Text("Wrong ans")
+                    }
+                }
+                Spacer()
+            }
+            .padding(.horizontal, 10)
+
+
+            
             Spacer()
                 .padding(.horizontal , 10)
                 .navigationBarHidden(true)
