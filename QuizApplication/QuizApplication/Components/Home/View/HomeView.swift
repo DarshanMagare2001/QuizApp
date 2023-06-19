@@ -46,13 +46,16 @@ struct HomeView: View {
                         HStack {
                             Spacer()
                             Text("Play Now")
-                                .foregroundColor(.white)
+                                .foregroundColor(.black)
                                 .font(.title)
+                                .bold()
                             Spacer()
                         }
                         .padding()
-                        .background(Color.blue)
+                        .background(.green)
                         .cornerRadius(20)
+                        .opacity(0.7)
+                        .shadow(color: .white, radius: 10)
                     }
                     
                     Button(action: {
@@ -61,13 +64,15 @@ struct HomeView: View {
                         HStack {
                             Spacer()
                             Text("Rules")
-                                .foregroundColor(.white)
+                                .foregroundColor(.black)
                                 .font(.title)
                             Spacer()
                         }
                         .padding()
-                        .background(Color.blue)
+                        .background(.yellow)
                         .cornerRadius(20)
+                        .opacity(0.7)
+                        .shadow(color: .white, radius: 10)
                     }
                 }
                 .padding(.horizontal, 10)
