@@ -74,7 +74,7 @@ struct QuizView: View {
                 
             }
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .center) {
                 ForEach(0..<2) { rowIndex in
                     HStack(spacing: 15) {
                         ForEach(0..<2) { columnIndex in
