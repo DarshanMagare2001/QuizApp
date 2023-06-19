@@ -48,16 +48,10 @@ struct FeedbackSheet: View {
                 
                 Spacer()
                 
-                Text("Suggestions for Improvement:")
-                    .font(.headline)
-                    .padding(.bottom, 10)
-                
-                Text("1. Provide more challenging questions.")
-                    .padding(.bottom, 5)
-                Text("2. Include explanations for correct answers.")
-                    .padding(.bottom, 5)
-                Text("3. Add a timer for each question.")
-                    .padding(.bottom, 5)
+                VStack {
+                    CircularProgressBar(score: score, totalQuestions: totalQuestions)
+                }
+
                 
                 Spacer()
                 
@@ -129,3 +123,36 @@ struct ParticlesModifier: ViewModifier {
         }
     }
 }
+
+struct CircularProgressBar: View {
+    var score: Int
+    var totalQuestions: Int
+    @State private var progress: CGFloat = 0.0
+    
+    var body: some View {
+        VStack {
+            ZStack {
+                Circle()
+                    .stroke(Color.gray, lineWidth: 10)
+                
+                Circle()
+                    .trim(from: 0.0, to: progress)
+                    .stroke(Color.blue, lineWidth: 10)
+                    .rotationEffect(.degrees(-90))
+                    .animation(.easeInOut(duration: 1.0))
+                
+                Text("\(score)/\(totalQuestions)")
+                    .font(.headline)
+                    .foregroundColor(.white)
+            }
+            .frame(width: 200, height: 200)
+        }
+        .onAppear {
+            let progressValue = CGFloat(score) / CGFloat(totalQuestions)
+            withAnimation {
+                progress = progressValue
+            }
+        }
+    }
+}
+
