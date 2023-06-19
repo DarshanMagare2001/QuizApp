@@ -1,22 +1,16 @@
-//
-//  FeedbackSheet.swift
-//  QuizApplication
-//
-//  Created by IPS-161 on 19/06/23.
-//
-
-import Foundation
 import SwiftUI
-
-
-
 
 struct FeedbackSheet: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var viewModel : QuizModelClass
+    @EnvironmentObject var viewModel: QuizModelClass
     var score: Int
     var totalQuestions: Int
- 
+    
+    // UserDefaults keys
+    let scoreKey = "QuizScore"
+    let highestScoreKey = "HighestQuizScore"
+    
+    @State private var highestScore: Int = 0 // Track the highest score
     
     var body: some View {
         ZStack {
@@ -61,11 +55,23 @@ struct FeedbackSheet: View {
                 
                 Spacer()
                 
+                VStack {
+                    Text("Leaderboard")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding(.top, 20)
+                    
+                    Text("Highest Score: \(highestScore)")
+                        .font(.subheadline)
+                        .foregroundColor(.white)
+                }
+                
+                Spacer()
+                
                 Button(action: {
                     // Dismiss the feedback sheet and go back
                     dismissSheet()
                     viewModel.dismiss.toggle()
-                   
                 }) {
                     Text("Close")
                         .font(.headline)
@@ -81,6 +87,19 @@ struct FeedbackSheet: View {
             .padding()
         }
         .foregroundColor(.yellow)
+        .onAppear {
+            // Load the highest score from UserDefaults
+            highestScore = UserDefaults.standard.integer(forKey: highestScoreKey)
+            
+            // Update the highest score if the current score is higher
+            if score > highestScore {
+                // Remove the previous highest score from UserDefaults
+                UserDefaults.standard.removeObject(forKey: highestScoreKey)
+                
+                highestScore = score
+                UserDefaults.standard.set(highestScore, forKey: highestScoreKey)
+            }
+        }
     }
     
     private func dismissSheet() {
@@ -105,77 +124,64 @@ struct FeedbackSheet: View {
 
 
 
-
-struct FireworkParticlesGeometryEffect : GeometryEffect {
-    var time : Double
-    var speed = Double.random(in: 20 ... 200)
-    var direction = Double.random(in: -Double.pi ...  Double.pi)
+struct FireworkParticlesGeometryEffect: GeometryEffect {
+    var time: Double
+    var speed = Double.random(in: 20...200)
+    var direction = Double.random(in: -Double.pi...Double.pi)
     
     var animatableData: Double {
         get { time }
         set { time = newValue }
     }
+    
     func effectValue(size: CGSize) -> ProjectionTransform {
         let xTranslation = speed * cos(direction) * time
         let yTranslation = speed * sin(direction) * time
-        let affineTranslation =  CGAffineTransform(translationX: xTranslation, y: yTranslation)
+        let affineTranslation = CGAffineTransform(translationX: xTranslation, y: yTranslation)
         return ProjectionTransform(affineTranslation)
     }
 }
 
 struct ParticlesModifier: ViewModifier {
-    @State var time = 0.0
-    @State var scale = 0.1
-    let duration = 5.0
+    @State private var time = 0.0
+    let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     
     func body(content: Content) -> some View {
-        ZStack {
-            ForEach(0..<80, id: \.self) { index in
-                content
-                    .hueRotation(Angle(degrees: time * 80))
-                    .scaleEffect(scale)
-                    .modifier(FireworkParticlesGeometryEffect(time: time))
-                    .opacity(((duration-time) / duration))
+        content
+            .onReceive(timer) { _ in
+                time += 0.1
             }
-        }
-        .onAppear {
-            withAnimation (.easeOut(duration: duration)) {
-                self.time = duration
-                self.scale = 1.0
-            }
-        }
+            .modifier(FireworkParticlesGeometryEffect(time: time))
     }
 }
 
 struct CircularProgressBar: View {
     var score: Int
     var totalQuestions: Int
-    @State private var progress: CGFloat = 0.0
+    
+    private var progress: Double {
+        return Double(score) / Double(totalQuestions)
+    }
     
     var body: some View {
-        VStack {
-            ZStack {
-                Circle()
-                    .stroke(Color.gray, lineWidth: 10)
-                
-                Circle()
-                    .trim(from: 0.0, to: progress)
-                    .stroke(Color.blue, lineWidth: 10)
-                    .rotationEffect(.degrees(-90))
-                    .animation(.easeInOut(duration: 1.0))
-                
-                Text("\(score)/\(totalQuestions)")
-                    .font(.headline)
-                    .foregroundColor(.white)
-            }
-            .frame(width: 100, height: 100)
+        ZStack {
+            Circle()
+                .stroke(lineWidth: 15)
+                .opacity(0.3)
+                .foregroundColor(Color.white)
+            
+            Circle()
+                .trim(from: 0, to: CGFloat(min(progress, 1.0)))
+                .stroke(style: StrokeStyle(lineWidth: 15, lineCap: .round, lineJoin: .round))
+                .foregroundColor(Color.green)
+                .rotationEffect(Angle(degrees: -90))
+                .animation(.linear)
+            
+            Text("\(score)/\(totalQuestions)")
+                .font(.title)
+                .fontWeight(.bold)
         }
-        .onAppear {
-            let progressValue = CGFloat(score) / CGFloat(totalQuestions)
-            withAnimation {
-                progress = progressValue
-            }
-        }
+        .frame(width: 150, height: 150)
     }
 }
 
