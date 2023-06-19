@@ -14,37 +14,57 @@ struct QuizView: View {
     @State var showFeedbackSheet = false
     
     var body: some View {
-        VStack(spacing: 15) {
-            HStack(spacing:30) {
-                Button {
-                    presentationMode.wrappedValue.dismiss()
-                } label: {
-                    Image(systemName: "arrow.left")
-                        .resizable()
-                        .foregroundColor(.black)
-                        .frame(width: 25, height: 25)
-                        .padding(5)
+        VStack {
+            VStack(spacing:5){
+                HStack {
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Image(systemName: "arrow.left")
+                            .resizable()
+                            .foregroundColor(.black)
+                            .frame(width: 25, height: 25)
+                            .padding(5)
+                    }
+                    
+                    Spacer()
+                    
+                    HStack{
+                        Spacer()
+                        Text("Score: \(score)")
+                            .font(.title)
+                            .padding(10)
+                            .background(Color(.systemGray5))
+                            .cornerRadius(20)
+                        
+                    }.padding()
                 }
                 
-                Text("Score: \(score)") // Display the score
-                
-                Spacer()
-            }
-            
-            HStack {
-                Spacer()
-                Circle()
-                    .frame(width: 80, height: 80)
-                    .foregroundColor(.white)
-                    .overlay {
-                        ProgressTrackForCircularProgressbarForQuiz()
-                        ProgressBarForCircularProgressbarForQuiz(counter: counter, countTo: countTo)
-                        ClockForCircularProgressbarForQuiz(counter: counter, countTo: countTo)
+                VStack(spacing:10){
+                    HStack {
+                        Spacer()
+                        Circle()
+                            .frame(width: 80, height: 80)
+                            .foregroundColor(.white)
+                            .shadow(color: .black, radius: 20)
+                            .overlay {
+                                ProgressTrackForCircularProgressbarForQuiz()
+                                ProgressBarForCircularProgressbarForQuiz(counter: counter, countTo: countTo)
+                                ClockForCircularProgressbarForQuiz(counter: counter, countTo: countTo)
+                            }
+                        
+                        Spacer()
+                    }.frame(height: 80)
+                     
+                    HStack{
+                        Spacer()
+                        HorizontalProgressBar(currentQuestionIndex: currentQuestionIndex, totalQuestions: quiz.count)
+                            .frame(height:10)
+                        Spacer()
                     }
-                Spacer()
-            }.frame(height: 80)
-            
-            
+                }
+            }
+         
             VStack(alignment:.leading){
                 HStack {
                     Text("Q. \(quiz[currentQuestionIndex].questionTitle ?? "")") // Show the current question
@@ -104,13 +124,8 @@ struct QuizView: View {
                 }
             }
             .padding(.horizontal, 10)
-            
+          
             Spacer()
-            HStack{
-                Spacer()
-                HorizontalProgressBar(currentQuestionIndex: currentQuestionIndex, totalQuestions: quiz.count)
-                Spacer()
-            }.padding(5)
             
                 .navigationBarHidden(true)
         }
