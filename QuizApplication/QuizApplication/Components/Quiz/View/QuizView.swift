@@ -1,7 +1,7 @@
 import SwiftUI
 import Combine
 
-
+//Main quiz view
 struct QuizView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewModel: QuizModelClass
@@ -58,6 +58,8 @@ struct QuizView: View {
                         }
                     }
                     
+                    //Score
+                    
                     Text("Score: \(score)")
                         .font(.title)
                         .padding(10)
@@ -92,6 +94,8 @@ struct QuizView: View {
                         Spacer()
                     }
                 }
+                
+                //Questions
                 
                 HStack {
                     Text("Q. \(shuffledQuiz[currentQuestionIndex].questionTitle ?? "")")
@@ -186,6 +190,8 @@ struct QuizView: View {
         }
     }
     
+    //This function get buttons
+    
     private func getButtonColor(optionIndex: Int) -> Color {
         if let isAnsweredCorrectly = isAnsweredCorrectly {
             if optionIndex == selectedOption {
@@ -210,6 +216,8 @@ struct QuizView: View {
     }
 }
 
+//Quiz options
+
 extension Quiz {
     func getOption(for index: Int) -> String {
         switch index {
@@ -225,6 +233,9 @@ extension Quiz {
             return ""
         }
     }
+    
+    //Function to get correct options
+    
     
     func getCorrectOptionIndex() -> Int {
         if let correctAns = correctAns {
@@ -245,6 +256,7 @@ extension Quiz {
     }
 }
 
+//This is use for giving color to options
 
 struct ConditionalBackgroundColorModifier: ViewModifier {
     let color: Color

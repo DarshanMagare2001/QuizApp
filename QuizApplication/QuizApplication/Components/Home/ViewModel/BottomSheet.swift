@@ -5,6 +5,8 @@
 //  Created by IPS-161 on 16/06/23.
 //
 
+//This is Bottom sheet
+
 import SwiftUI
 
 struct BottomSheet: View {
@@ -22,6 +24,8 @@ struct BottomSheet: View {
                   .shadow(color: .black, radius: 15)
               Spacer()
           }.padding(.vertical , 5)
+          
+          //Rules for quiz game
           
           HStack{
               Spacer()

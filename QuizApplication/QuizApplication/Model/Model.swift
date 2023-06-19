@@ -5,6 +5,7 @@
 //  Created by IPS-161 on 16/06/23.
 //
 
+// Model class 
 import Foundation
 import SwiftUI
 

@@ -5,8 +5,8 @@
 //  Created by IPS-161 on 16/06/23.
 //
 
+//This is difficulty show view
 import SwiftUI
-
 struct DifficultyView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewModel: QuizModelClass

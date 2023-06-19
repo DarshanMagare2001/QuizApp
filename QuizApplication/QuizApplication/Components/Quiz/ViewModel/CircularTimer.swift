@@ -5,6 +5,7 @@
 //  Created by IPS-161 on 16/06/23.
 //
 
+//Circular timer for quiz
 import Foundation
 import SwiftUI
 
@@ -33,6 +34,7 @@ struct ClockForCircularProgressbarForQuiz: View {
     }
 }
 
+//Circular progressbar
 struct ProgressTrackForCircularProgressbarForQuiz: View {
     var body: some View {
         Circle()

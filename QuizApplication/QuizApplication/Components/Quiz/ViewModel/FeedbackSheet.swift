@@ -1,5 +1,5 @@
 import SwiftUI
-
+//Feedback sheet
 struct FeedbackSheet: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewModel: QuizModelClass
@@ -124,7 +124,7 @@ struct FeedbackSheet: View {
     }
 }
 
-
+//Fireworks animation
 
 struct FireworkParticlesGeometryEffect: GeometryEffect {
     var time: Double

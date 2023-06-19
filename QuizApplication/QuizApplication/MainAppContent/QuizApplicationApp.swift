@@ -9,9 +9,8 @@ import SwiftUI
 
 @main
 struct QuizApplicationApp: App {
-    
-  @State var viewModel = QuizModelClass()
-    
+    //Global declaration of ObserableObject class
+    @State var viewModel = QuizModelClass()
     var body: some Scene {
         WindowGroup {
             NavigationView{
