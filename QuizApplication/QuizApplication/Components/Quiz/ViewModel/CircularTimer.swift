@@ -62,17 +62,14 @@ struct ProgressBarForCircularProgressbarForQuiz: View {
                         )
                 )
                 .foregroundColor(
-                    completed() ? Color.green : Color.orange
+                    counter <= 20 ?  Color.green  : Color.red
                 )
                 .animation(.easeInOut(duration: 0.2))
         )
-    }
-    
-    func completed() -> Bool {
-        return progress() == 1
     }
     
     func progress() -> CGFloat {
         return CGFloat(counter) / CGFloat(countTo)
     }
 }
+

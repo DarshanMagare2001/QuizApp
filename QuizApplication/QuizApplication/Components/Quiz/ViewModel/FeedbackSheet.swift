@@ -29,7 +29,7 @@ struct FeedbackSheet: View {
                     .offset(x: 60, y: 70)
             }
             ScrollView{
-                VStack {
+                VStack(spacing:20) {
                     
                     Text("Quiz Finished")
                         .font(.title)
