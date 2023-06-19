@@ -131,15 +131,26 @@ struct QuizView: View {
                 if let isAnsweredCorrectly = isAnsweredCorrectly, let selectedOption = selectedOption {
                     if isAnsweredCorrectly {
                         Text("Correct ans")
+                            .font(.caption)
+                            .padding(.horizontal , 50)
+                            .padding(.vertical , 2)
+                            .background(.green)
+                            .cornerRadius(20)
+                        
                     } else {
                         Text("Wrong ans")
+                            .font(.caption)
+                            .padding(.horizontal , 50)
+                            .padding(.vertical , 2)
+                            .background(.red)
+                            .cornerRadius(20)
                     }
                 }
                 Spacer()
-            }
-            .padding(.horizontal, 10)
-
-
+            }.frame(height:10)
+                .padding(.horizontal, 10)
+            
+            
             
             Spacer()
                 .padding(.horizontal , 10)
@@ -183,7 +194,7 @@ struct QuizView: View {
         
         return Color.clear
     }
-
+    
     
     
     private func getButtonOpacity(optionIndex: Int) -> Double {
