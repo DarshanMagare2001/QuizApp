@@ -128,6 +128,7 @@ struct QuizView: View {
             }.padding(.bottom, 5)
                 .padding(.horizontal , 10)
             
+            Spacer()
             HStack {
                 Spacer()
                 if let isAnsweredCorrectly = isAnsweredCorrectly, let selectedOption = selectedOption {

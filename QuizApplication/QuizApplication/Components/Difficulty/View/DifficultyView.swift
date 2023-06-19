@@ -15,6 +15,7 @@ struct DifficultyView: View {
         ZStack {
             BubbleView()
             VStack {
+                Spacer()
                 HStack {
                     Button {
                         presentationMode.wrappedValue.dismiss()
@@ -27,22 +28,23 @@ struct DifficultyView: View {
                     }
                     Spacer()
                 }
-                
-                Spacer()
-                
+               
                 VStack {
                     VStack {
-                        HStack {
+                        VStack{
                             Spacer()
-                            Text("Easy")
-                                .font(.system(size: 30))
-                                .font(.largeTitle)
-                                .bold()
-                                .foregroundColor(.white)
+                            HStack {
+                                Spacer()
+                                Text("Easy")
+                                    .font(.largeTitle)
+                                    .bold()
+                                    .foregroundColor(.white)
+                                
+                                Spacer()
+                            }
                             
                             Spacer()
-                        }
-                        .background(.purple)
+                        }.background(.purple)
                         
                         HStack {
                             Spacer()
@@ -67,17 +69,20 @@ struct DifficultyView: View {
                     Spacer()
                     
                     VStack {
-                        HStack {
+                        VStack{
                             Spacer()
-                            Text("Normal")
-                                .font(.system(size: 30))
-                                .font(.largeTitle)
-                                .bold()
-                                .foregroundColor(.white)
+                            HStack {
+                                Spacer()
+                                Text("Normal")
+                                    .font(.largeTitle)
+                                    .bold()
+                                    .foregroundColor(.white)
+                                
+                                Spacer()
+                            }
                             
                             Spacer()
-                        }
-                        .background(.pink)
+                        }.background(.purple)
                         
                         HStack {
                             Spacer()
@@ -102,17 +107,20 @@ struct DifficultyView: View {
                     Spacer()
                     
                     VStack {
-                        HStack {
+                        VStack{
                             Spacer()
-                            Text("Hard")
-                                .font(.system(size: 30))
-                                .font(.largeTitle)
-                                .bold()
-                                .foregroundColor(.white)
+                            HStack {
+                                Spacer()
+                                Text("Hard")
+                                    .font(.largeTitle)
+                                    .bold()
+                                    .foregroundColor(.white)
+                                
+                                Spacer()
+                            }
                             
                             Spacer()
-                        }
-                        .background(.blue)
+                        } .background(.purple)
                         
                         HStack {
                             Spacer()
