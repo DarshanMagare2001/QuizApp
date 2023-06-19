@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+
 struct FeedbackSheet: View {
     @Environment(\.presentationMode) var presentationMode
     var score: Int
@@ -15,43 +16,43 @@ struct FeedbackSheet: View {
     var body: some View {
         ZStack {
             Color.black.edgesIgnoringSafeArea(.all)
-            
             ZStack {
-                      Circle()
-                          .fill(Color.blue)
-                          .frame(width: 12, height: 12)
-                          .modifier(ParticlesModifier())
-                          .offset(x: -100, y : -50)
-                      
-                      Circle()
-                          .fill(Color.red)
-                          .frame(width: 12, height: 12)
-                          .modifier(ParticlesModifier())
-                          .offset(x: 60, y : 70)
-                  }
-            
+                Circle()
+                    .fill(Color.blue)
+                    .frame(width: 12, height: 12)
+                    .modifier(ParticlesModifier())
+                    .offset(x: -100, y: -50)
+                
+                Circle()
+                    .fill(Color.red)
+                    .frame(width: 12, height: 12)
+                    .modifier(ParticlesModifier())
+                    .offset(x: 60, y: 70)
+            }
             
             VStack {
-                VStack{
-                    Text("Quiz Finished")
-                        .font(.title)
-                        .padding(.top, 20)
-                    
-                    Spacer()
-                    
-                    Text("Score: \(score)/\(totalQuestions)")
-                        .font(.headline)
-                    
-                    Spacer()
-                }
-              
+                
+                Text("Quiz Finished")
+                    .font(.title)
+                    .padding(.top, 20)
                 
                 Spacer()
                 
                 VStack {
                     CircularProgressBar(score: score, totalQuestions: totalQuestions)
                 }
-
+                
+                Spacer()
+                
+                VStack {
+                    Text(feedbackMessage(score: score))
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 20)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                }
                 
                 Spacer()
                 
@@ -71,7 +72,6 @@ struct FeedbackSheet: View {
                 Spacer()
             }
             .padding()
-           
         }
         .foregroundColor(.yellow)
     }
@@ -79,7 +79,23 @@ struct FeedbackSheet: View {
     private func dismissSheet() {
         self.presentationMode.wrappedValue.dismiss()
     }
+    
+    private func feedbackMessage(score: Int) -> String {
+        switch score {
+        case 0..<5:
+            return "Keep practicing! You can do better."
+        case 5..<8:
+            return "Good job! You're getting there."
+        case 8..<10:
+            return "Great work! You're almost a pro."
+        case 10:
+            return "Perfect score! You're a Quiz Master!"
+        default:
+            return ""
+        }
+    }
 }
+
 
 
 
