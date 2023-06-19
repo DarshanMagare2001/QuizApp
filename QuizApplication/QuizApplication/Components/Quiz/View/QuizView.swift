@@ -15,32 +15,31 @@ struct QuizView: View {
     
     var body: some View {
         VStack {
-            VStack(spacing:5){
-                HStack {
-                    Button {
-                        presentationMode.wrappedValue.dismiss()
-                    } label: {
-                        Image(systemName: "arrow.left")
-                            .resizable()
-                            .foregroundColor(.black)
-                            .frame(width: 25, height: 25)
-                            .padding(5)
-                    }
-                    
-                    Spacer()
-                    
-                    HStack{
-                        Spacer()
-                        Text("Score: \(score)")
-                            .font(.title)
-                            .padding(10)
-                            .background(Color(.systemGray5))
-                            .cornerRadius(20)
-                        
-                    }.padding()
+            HStack {
+                Button {
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Image(systemName: "arrow.left")
+                        .resizable()
+                        .foregroundColor(.black)
+                        .frame(width: 25, height: 25)
+                        .padding(5)
                 }
                 
-                VStack(spacing:10){
+                Spacer()
+                
+                HStack{
+                    Spacer()
+                    Text("Score: \(score)")
+                        .font(.title)
+                        .padding(10)
+                        .background(Color(.systemGray5))
+                        .cornerRadius(20)
+                    
+                }.padding(5)
+            }
+            VStack(spacing:5){
+                VStack(spacing:15){
                     HStack {
                         Spacer()
                         Circle()
@@ -55,7 +54,7 @@ struct QuizView: View {
                         
                         Spacer()
                     }.frame(height: 80)
-                     
+                    
                     HStack{
                         Spacer()
                         HorizontalProgressBar(currentQuestionIndex: currentQuestionIndex, totalQuestions: quiz.count)
@@ -63,70 +62,72 @@ struct QuizView: View {
                         Spacer()
                     }
                 }
-            }
-         
-            VStack(alignment:.leading){
-                HStack {
-                    Text("Q. \(quiz[currentQuestionIndex].questionTitle ?? "")") // Show the current question
+                HStack{
+                    Text("Q. \(quiz[currentQuestionIndex].questionTitle ?? "")")
+                        .font(.subheadline)
+                        .bold()
+                        .fixedSize(horizontal: false, vertical: true)
                     Spacer()
-                }
+                }.padding(.horizontal , 10)
                 
-                VStack(alignment: .leading) {
-                    ForEach(0..<2) { rowIndex in
-                        HStack(spacing: 15) {
-                            ForEach(0..<2) { columnIndex in
-                                let optionIndex = (rowIndex * 2) + columnIndex + 1
-                                Button(action: {
-                                    selectedOption = optionIndex // Set the selected option
-                                    isAnsweredCorrectly = quiz[currentQuestionIndex].getOption(for: optionIndex) == quiz[currentQuestionIndex].correctAns
-                                    
-                                    if isAnsweredCorrectly == true {
-                                        score += 1 // Increment the score if answered correctly
-                                    }
-                                    
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                        // After 1 second, move to the next question or show feedback sheet
-                                        selectedOption = nil // Reset the selected option
-                                        isAnsweredCorrectly = nil // Reset the answered correctly flag
-                                        if currentQuestionIndex < quiz.count - 1 {
-                                            currentQuestionIndex += 1
-                                            counter = 0 // Reset the timer when the question changes
-                                        } else {
-                                            // All questions finished, show feedback sheet
-                                            showFeedbackSheet = true
-                                            timer.upstream.connect().cancel() // Stop the timer
-                                        }
-                                    }
-                                }) {
-                                    HStack{
-                                        Text("\(optionIndex))")
-                                            .foregroundColor(.black)
-                                        Text(quiz[currentQuestionIndex].getOption(for: optionIndex))
-                                            .font(.headline)
-                                            .foregroundColor(.black)
-                                            .padding(5)
-                                            .frame(maxWidth: .infinity)
-                                            .background(
-                                                RoundedRectangle(cornerRadius: 10)
-                                                    .fill(getButtonColor(optionIndex: optionIndex))
-                                                    .opacity(getButtonOpacity(optionIndex: optionIndex))
-                                            )
-                                            .modifier(ConditionalBackgroundColorModifier(color: getButtonColor(optionIndex: optionIndex)))
-                                        Spacer()
+            }
+            
+            VStack(alignment: .leading) {
+                ForEach(0..<2) { rowIndex in
+                    HStack(spacing: 15) {
+                        ForEach(0..<2) { columnIndex in
+                            let optionIndex = (rowIndex * 2) + columnIndex + 1
+                            Button(action: {
+                                selectedOption = optionIndex // Set the selected option
+                                isAnsweredCorrectly = quiz[currentQuestionIndex].getOption(for: optionIndex) == quiz[currentQuestionIndex].correctAns
+                                
+                                if isAnsweredCorrectly == true {
+                                    score += 1 // Increment the score if answered correctly
+                                }
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    // After 1 second, move to the next question or show feedback sheet
+                                    selectedOption = nil // Reset the selected option
+                                    isAnsweredCorrectly = nil // Reset the answered correctly flag
+                                    if currentQuestionIndex < quiz.count - 1 {
+                                        currentQuestionIndex += 1
+                                        counter = 0 // Reset the timer when the question changes
+                                    } else {
+                                        // All questions finished, show feedback sheet
+                                        showFeedbackSheet = true
+                                        timer.upstream.connect().cancel() // Stop the timer
                                     }
                                 }
-                                .disabled(selectedOption != nil)
+                            }) {
+                                HStack{
+                                    Text("\(optionIndex))")
+                                        .foregroundColor(.black)
+                                    Text(quiz[currentQuestionIndex].getOption(for: optionIndex))
+                                        .font(.caption)
+                                        .bold()
+                                        .foregroundColor(.black)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .padding(5)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .fill(getButtonColor(optionIndex: optionIndex))
+                                                .opacity(getButtonOpacity(optionIndex: optionIndex))
+                                        )
+                                        .modifier(ConditionalBackgroundColorModifier(color: getButtonColor(optionIndex: optionIndex)))
+                                    Spacer()
+                                }
                             }
+                            .disabled(selectedOption != nil)
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 5)
                     }
+                    .frame(maxWidth: .infinity)
+                    
                 }
-            }
-            .padding(.horizontal, 10)
-          
-            Spacer()
+            }.padding(.bottom, 5)
+                .padding(.horizontal , 10)
             
+            Spacer()
+                .padding(.horizontal , 10)
                 .navigationBarHidden(true)
         }
         .onAppear {
