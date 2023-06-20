@@ -11,6 +11,7 @@ struct FeedbackSheet: View {
     let highestScoreKey = "HighestQuizScore"
     
     @State private var highestScore: Int = 0 // Track the highest score
+    @State private var username: String = ""
     
     var body: some View {
         ZStack {
@@ -61,6 +62,12 @@ struct FeedbackSheet: View {
                             .foregroundColor(.white)
                             .padding(.top, 20)
                         
+                        if !username.isEmpty {
+                            Text(username)
+                                .font(.headline)
+                                .foregroundColor(.white)
+                        }
+                        
                         Text("Highest Score: \(highestScore)")
                             .font(.subheadline)
                             .foregroundColor(.white)
@@ -93,6 +100,11 @@ struct FeedbackSheet: View {
             // Load the highest score from UserDefaults
             highestScore = UserDefaults.standard.integer(forKey: highestScoreKey)
             
+            // Load the username from UserDefaults
+            if let storedUsername = UserDefaults.standard.string(forKey: "Username") {
+                username = storedUsername
+            }
+            
             // Update the highest score if the current score is higher
             if score > highestScore {
                 // Remove the previous highest score from UserDefaults
@@ -123,6 +135,7 @@ struct FeedbackSheet: View {
         }
     }
 }
+
 
 //Fireworks animation
 

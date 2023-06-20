@@ -3,6 +3,7 @@
 
 import SwiftUI
 import SwiftUIBottomSheet
+
 struct HomeView: View {
     @State private var isShown = false
     @State private var height: CGFloat = 250
@@ -10,12 +11,14 @@ struct HomeView: View {
     @State private var isDifficultyViewShow = false
     @State private var isPopupShow = false
     
+    @State private var username: String = ""
+    
     var body: some View {
         ZStack {
             BubbleView()
-            if isPopupShow {
+            if isPopupShow && UserDefaults.standard.string(forKey: "Username") == nil {
                 Userinput(isShowing: $isPopupShow, isDifficultyViewShow: $isDifficultyViewShow)
-            }else{
+            } else {
                 VStack {
                     HStack {
                         Spacer()
@@ -48,8 +51,8 @@ struct HomeView: View {
                     
                     VStack {
                         Button(action: {
-                            //                        isDifficultyViewShow.toggle()
                             isPopupShow.toggle()
+                            isDifficultyViewShow.toggle()
                         }) {
                             HStack {
                                 Spacer()
@@ -103,8 +106,14 @@ struct HomeView: View {
                 
             }
         }
+        .onAppear {
+            if let storedUsername = UserDefaults.standard.string(forKey: "Username") {
+                username = storedUsername
+            }
+        }
     }
 }
+
 
 
 
