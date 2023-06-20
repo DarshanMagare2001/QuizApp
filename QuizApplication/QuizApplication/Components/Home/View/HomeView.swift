@@ -14,9 +14,7 @@ struct HomeView: View {
         ZStack {
             BubbleView()
             if isPopupShow {
-                
                 Userinput(isShowing: $isPopupShow, isDifficultyViewShow: $isDifficultyViewShow)
-                
             }else{
                 VStack {
                     HStack {
@@ -50,7 +48,7 @@ struct HomeView: View {
                     
                     VStack {
                         Button(action: {
-    //                        isDifficultyViewShow.toggle()
+                            //                        isDifficultyViewShow.toggle()
                             isPopupShow.toggle()
                         }) {
                             HStack {
@@ -104,8 +102,8 @@ struct HomeView: View {
             NavigationLink(destination: DifficultyView(), isActive: $isDifficultyViewShow){
                 
             }
-         }
-     }
+        }
+    }
 }
 
 
