@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+
 struct Userinput: View {
     @Binding var isShowing: Bool
+    @State private var username: String = ""
     
     var body: some View {
         ZStack {
@@ -20,15 +22,21 @@ struct Userinput: View {
                     .padding()
                 
                 // Add your custom popup content here
+                TextField("Enter username", text: $username)
+                    .padding()
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(10)
+                    .padding(.horizontal)
                 
                 Button(action: {
+                    UserDefaults.standard.set(username, forKey: "Username")
                     isShowing = false
                 }) {
-                    Text("Close")
+                    Text("Save")
                         .font(.title)
                         .foregroundColor(.white)
                         .padding()
-                        .background(Color.red)
+                        .background(Color.green)
                         .cornerRadius(20)
                         .opacity(0.7)
                         .shadow(color: .white, radius: 10)
@@ -43,3 +51,4 @@ struct Userinput: View {
         }
     }
 }
+
