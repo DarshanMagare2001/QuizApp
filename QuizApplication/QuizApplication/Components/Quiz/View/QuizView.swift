@@ -1,5 +1,6 @@
 import SwiftUI
 import Combine
+import AVFoundation
 
 struct QuizView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -14,6 +15,9 @@ struct QuizView: View {
     var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // Timer to track the counter
     @State var showFeedbackSheet = false
     @State var shuffledQuiz: [Quiz] // Shuffled array to store randomized questions
+    
+    // AVAudioPlayer to play the beep sound
+    @State private var audioPlayer: AVAudioPlayer?
     
     init(quiz: [Quiz]) {
         self.quiz = quiz
@@ -97,7 +101,7 @@ struct QuizView: View {
                         .fixedSize(horizontal: false, vertical: true)
                     Spacer()
                 }
-              
+                
             }
             Spacer()
             VStack{
@@ -130,31 +134,51 @@ struct QuizView: View {
             
             .navigationBarHidden(true)
             
-        }.padding(.horizontal , 10)
-            .padding(.top,5)
-            .onChange(of: viewModel.dismiss, perform: { _ in
-                presentationMode.wrappedValue.dismiss()
-            })
-            .fullScreenCover(isPresented: $showFeedbackSheet) {
-                FeedbackSheet(score: score, totalQuestions: shuffledQuiz.count)
+        }.onChange(of: isAnsweredCorrectly) { _ in
+            if isAnsweredCorrectly == false {
+                playBeepSound() // Play beep sound for wrong answer
             }
-            .onReceive(timer) { time in
-                if counter < countTo {
-                    counter += 1
+        }
+        .padding(.horizontal , 10)
+        .padding(.top,5)
+        .onChange(of: viewModel.dismiss, perform: { _ in
+            presentationMode.wrappedValue.dismiss()
+        })
+        .fullScreenCover(isPresented: $showFeedbackSheet) {
+            FeedbackSheet(score: score, totalQuestions: shuffledQuiz.count)
+        }
+        .onReceive(timer) { time in
+            if counter < countTo {
+                counter += 1
+            } else {
+                // Timer finished for the current question
+                if currentQuestionIndex < shuffledQuiz.count - 1 {
+                    currentQuestionIndex += 1 // Move to the next question
+                    counter = 0 // Reset the timer
+                    selectedOption = nil // Reset the selected option
+                    isAnsweredCorrectly = nil // Reset the correctness indicator
                 } else {
-                    // Timer finished for the current question
-                    if currentQuestionIndex < shuffledQuiz.count - 1 {
-                        currentQuestionIndex += 1 // Move to the next question
-                        counter = 0 // Reset the timer
-                        selectedOption = nil // Reset the selected option
-                        isAnsweredCorrectly = nil // Reset the correctness indicator
-                    } else {
-                        // All questions finished, show feedback sheet
-                        showFeedbackSheet = true
-                        timer.upstream.connect().cancel() // Stop the timer
-                    }
+                    // All questions finished, show feedback sheet
+                    showFeedbackSheet = true
+                    timer.upstream.connect().cancel() // Stop the timer
                 }
             }
+        }
+    }
+    // Function to beep sound
+    
+    private func playBeepSound() {
+        guard let soundURL = Bundle.main.url(forResource: "beep", withExtension: "mp3") else {
+            print("Failed to locate beep sound file")
+            return
+        }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+            audioPlayer?.play()
+        } catch {
+            print("Failed to play beep sound: \(error.localizedDescription)")
+        }
     }
     
     // Function to check the selected answer

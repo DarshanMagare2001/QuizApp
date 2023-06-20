@@ -213,6 +213,7 @@ struct ParticlesModifier: ViewModifier {
     }
 }
 
+// This is circular progrssbar for feedbackView
 
 struct CircularProgressBar: View {
     var score: Int
