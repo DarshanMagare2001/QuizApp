@@ -14,12 +14,12 @@ struct QuizView: View {
     var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // Timer to track the counter
     @State var showFeedbackSheet = false
     @State var shuffledQuiz: [Quiz] // Shuffled array to store randomized questions
-
+    
     init(quiz: [Quiz]) {
         self.quiz = quiz
         self._shuffledQuiz = State(initialValue: quiz.shuffled()) // Shuffle the quiz array
     }
-
+    
     var body: some View {
         VStack {
             HStack {
@@ -32,13 +32,13 @@ struct QuizView: View {
                         .frame(width: 25, height: 25)
                         .padding(5)
                 }
-
+                
                 Spacer()
-
+                
                 HStack{
-
+                    
                     Spacer()
-
+                    
                     VStack{
                         if let isAnsweredCorrectly = isAnsweredCorrectly, let selectedOption = selectedOption {
                             if isAnsweredCorrectly {
@@ -56,24 +56,24 @@ struct QuizView: View {
                             }
                         }
                     }
-
+                    
                     //Score
-
+                    
                     Text("Score: \(score)")
                         .font(.title)
                         .padding(10)
                         .background(Color(.systemGray5))
                         .cornerRadius(20)
-
+                    
                 }.padding(5)
             }
-
+            
             VStack(spacing: 5) {
                 VStack(spacing: 15) {
                     HStack {
                         Spacer()
                         Circle()
-                            .frame(width: 80, height: 80)
+                        
                             .foregroundColor(.white)
                             .shadow(color: .black, radius: 20)
                             .overlay {
@@ -81,11 +81,11 @@ struct QuizView: View {
                                 ProgressBarForCircularProgressbarForQuiz(counter: counter, countTo: countTo)
                                 ClockForCircularProgressbarForQuiz(counter: counter, countTo: countTo)
                             }
-
+                        
                         Spacer()
                     }
-                    .frame(height: 80)
-
+                    
+                    
                     HStack {
                         Spacer()
                         HorizontalProgressBar(currentQuestionIndex: currentQuestionIndex, totalQuestions: quiz.count)
@@ -93,9 +93,9 @@ struct QuizView: View {
                         Spacer()
                     }
                 }
-
+                
                 //Questions
-
+                
                 HStack {
                     Text("Q. \(shuffledQuiz[currentQuestionIndex].questionTitle ?? "")")
                         .font(.headline)
@@ -103,7 +103,7 @@ struct QuizView: View {
                         .fixedSize(horizontal: false, vertical: true)
                     Spacer()
                 }
-
+                
                 .padding(.horizontal, 10)
             }
             Spacer()
@@ -134,10 +134,8 @@ struct QuizView: View {
                 }
             }
             .padding(.horizontal, 10)
-            
-            Spacer()
-                .padding(.horizontal, 10)
-                .navigationBarHidden(true)
+            .padding(.horizontal, 10)
+            .navigationBarHidden(true)
         }
         .onChange(of: viewModel.dismiss, perform: { _ in
             presentationMode.wrappedValue.dismiss()
@@ -163,7 +161,7 @@ struct QuizView: View {
             }
         }
     }
-
+    
     // Function to check the selected answer
     // Function to check the selected answer
     private func checkAnswer(optionIndex: Int) {
@@ -187,8 +185,8 @@ struct QuizView: View {
             }
         }
     }
-
-
+    
+    
     // This function gets the button color based on the selected option and correctness
     private func getButtonColor(optionIndex: Int) -> Color {
         if let isAnsweredCorrectly = isAnsweredCorrectly {
@@ -202,10 +200,10 @@ struct QuizView: View {
                 return Color.green.opacity(0.4)
             }
         }
-
+        
         return Color.clear
     }
-
+    
     // This function gets the button opacity based on the selected option
     private func getButtonOpacity(optionIndex: Int) -> Double {
         if selectedOption != nil && optionIndex != selectedOption {
@@ -230,7 +228,7 @@ extension Quiz {
             return ""
         }
     }
-
+    
     func getCorrectOptionIndex() -> Int {
         if let correctAns = correctAns {
             switch correctAns {
@@ -252,7 +250,7 @@ extension Quiz {
 
 struct ConditionalBackgroundColorModifier: ViewModifier {
     let color: Color
-
+    
     func body(content: Content) -> some View {
         ZStack {
             color
