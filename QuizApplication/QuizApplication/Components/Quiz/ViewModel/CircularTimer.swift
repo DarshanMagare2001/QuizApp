@@ -62,7 +62,7 @@ struct ProgressBarForCircularProgressbarForQuiz: View {
                         )
                 )
                 .foregroundColor(
-                    counter <= 20 ?  Color.green  : Color.red
+                    counter <= 10 ?  Color.green  : Color.red
                 )
                 .animation(.easeInOut(duration: 0.2))
         )

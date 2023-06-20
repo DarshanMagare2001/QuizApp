@@ -18,8 +18,6 @@
 		13823A8C2A3C28780078B91A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13823A8B2A3C28770078B91A /* HomeView.swift */; };
 		13823A8E2A3C29350078B91A /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13823A8D2A3C29350078B91A /* Model.swift */; };
 		13823A902A3C2DA60078B91A /* BubbleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13823A8F2A3C2DA60078B91A /* BubbleAnimation.swift */; };
-		13823A952A3C3AA50078B91A /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13823A942A3C3AA50078B91A /* BottomSheet.swift */; };
-		13823A982A3C3D200078B91A /* SwiftUIBottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 13823A972A3C3D200078B91A /* SwiftUIBottomSheet */; };
 		13823A9A2A3C57750078B91A /* CircularTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13823A992A3C57750078B91A /* CircularTimer.swift */; };
 		1384F6DC2A417EED0039CD42 /* UserInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1384F6DB2A417EED0039CD42 /* UserInput.swift */; };
 /* End PBXBuildFile section */
@@ -37,7 +35,6 @@
 		13823A8B2A3C28770078B91A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		13823A8D2A3C29350078B91A /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		13823A8F2A3C2DA60078B91A /* BubbleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleAnimation.swift; sourceTree = "<group>"; };
-		13823A942A3C3AA50078B91A /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		13823A992A3C57750078B91A /* CircularTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularTimer.swift; sourceTree = "<group>"; };
 		1384F6DB2A417EED0039CD42 /* UserInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInput.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -47,7 +44,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13823A982A3C3D200078B91A /* SwiftUIBottomSheet in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,7 +201,6 @@
 		13823A852A3C283E0078B91A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				13823A942A3C3AA50078B91A /* BottomSheet.swift */,
 				1384F6DB2A417EED0039CD42 /* UserInput.swift */,
 			);
 			path = ViewModel;
@@ -228,7 +223,6 @@
 			);
 			name = QuizApplication;
 			packageProductDependencies = (
-				13823A972A3C3D200078B91A /* SwiftUIBottomSheet */,
 			);
 			productName = QuizApplication;
 			productReference = 13823A672A3C266B0078B91A /* QuizApplication.app */;
@@ -259,7 +253,6 @@
 			);
 			mainGroup = 13823A5E2A3C266B0078B91A;
 			packageReferences = (
-				13823A962A3C3D200078B91A /* XCRemoteSwiftPackageReference "SwiftUIBottomSheet" */,
 			);
 			productRefGroup = 13823A682A3C266B0078B91A /* Products */;
 			projectDirPath = "";
@@ -291,7 +284,6 @@
 				1384F6DC2A417EED0039CD42 /* UserInput.swift in Sources */,
 				13823A8A2A3C286C0078B91A /* DifficultyView.swift in Sources */,
 				13686F552A4013650084EFDB /* FeedbackSheet.swift in Sources */,
-				13823A952A3C3AA50078B91A /* BottomSheet.swift in Sources */,
 				13823A9A2A3C57750078B91A /* CircularTimer.swift in Sources */,
 				13823A6B2A3C266B0078B91A /* QuizApplicationApp.swift in Sources */,
 				13823A8E2A3C29350078B91A /* Model.swift in Sources */,
@@ -501,25 +493,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		13823A962A3C3D200078B91A /* XCRemoteSwiftPackageReference "SwiftUIBottomSheet" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SyrupMG/SwiftUIBottomSheet.git";
-			requirement = {
-				kind = exactVersion;
-				version = 1.2.5;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		13823A972A3C3D200078B91A /* SwiftUIBottomSheet */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 13823A962A3C3D200078B91A /* XCRemoteSwiftPackageReference "SwiftUIBottomSheet" */;
-			productName = SwiftUIBottomSheet;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 13823A5F2A3C266B0078B91A /* Project object */;
 }

@@ -5,7 +5,7 @@ struct QuizView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewModel: QuizModelClass
     @State var counter: Int = 0
-    var countTo: Int = 30
+    var countTo: Int = 20
     var quiz: [Quiz]
     @State var currentQuestionIndex = 0 // Track the current question index
     @State var selectedOption: Int?

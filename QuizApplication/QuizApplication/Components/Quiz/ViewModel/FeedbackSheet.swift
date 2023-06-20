@@ -16,7 +16,8 @@ struct FeedbackSheet: View {
     var body: some View {
         ZStack {
             Color.black.edgesIgnoringSafeArea(.all)
-            ZStack {
+            
+            ZStack{
                 Circle()
                     .fill(Color.blue)
                     .frame(width: 12, height: 12)
@@ -29,29 +30,33 @@ struct FeedbackSheet: View {
                     .modifier(ParticlesModifier())
                     .offset(x: 60, y: 70)
             }
+            
             ScrollView{
                 VStack(spacing:20) {
-                    
-                    Text("Quiz Finished")
-                        .font(.title)
-                        .padding(.top, 20)
-                    
-                    Spacer()
-                    
-                    VStack {
-                        CircularProgressBar(score: score, totalQuestions: totalQuestions)
-                    }
-                    
-                    Spacer()
-                    
-                    VStack {
-                        Text(feedbackMessage(score: score))
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 20)
-                            .background(Color.blue)
-                            .cornerRadius(10)
+                    VStack(spacing:20){
+                        Spacer()
+                        
+                        Text("Quiz Finished")
+                            .font(.title)
+                            .padding(.top, 20)
+                        
+                        Spacer()
+                        
+                        VStack {
+                            CircularProgressBar(score: score, totalQuestions: totalQuestions)
+                        }
+                        
+                        Spacer()
+                        
+                        VStack {
+                            Text(feedbackMessage(score: score))
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding(.vertical, 10)
+                                .padding(.horizontal, 20)
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                        }
                     }
                     
                     Spacer()
@@ -90,30 +95,44 @@ struct FeedbackSheet: View {
                     }
                     
                     Spacer()
+                    
+                    VStack {
+                        Text("Tips for Improvement")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .padding(.top, 20)
+                        
+                        Text(tipsForImprovement(score: score))
+                            .font(.subheadline)
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 40)
+                    }
+                    
+                    Spacer()
                 }
                 .padding()
             }
-          
+            .onAppear {
+                // Load the highest score from UserDefaults
+                highestScore = UserDefaults.standard.integer(forKey: highestScoreKey)
+                
+                // Load the username from UserDefaults
+                if let storedUsername = UserDefaults.standard.string(forKey: "Username") {
+                    username = storedUsername
+                }
+                
+                // Update the highest score if the current score is higher
+                if score > highestScore {
+                    // Remove the previous highest score from UserDefaults
+                    UserDefaults.standard.removeObject(forKey: highestScoreKey)
+                    
+                    highestScore = score
+                    UserDefaults.standard.set(highestScore, forKey: highestScoreKey)
+                }
+            }
         }
         .foregroundColor(.yellow)
-        .onAppear {
-            // Load the highest score from UserDefaults
-            highestScore = UserDefaults.standard.integer(forKey: highestScoreKey)
-            
-            // Load the username from UserDefaults
-            if let storedUsername = UserDefaults.standard.string(forKey: "Username") {
-                username = storedUsername
-            }
-            
-            // Update the highest score if the current score is higher
-            if score > highestScore {
-                // Remove the previous highest score from UserDefaults
-                UserDefaults.standard.removeObject(forKey: highestScoreKey)
-                
-                highestScore = score
-                UserDefaults.standard.set(highestScore, forKey: highestScoreKey)
-            }
-        }
     }
     
     private func dismissSheet() {
@@ -134,7 +153,31 @@ struct FeedbackSheet: View {
             return ""
         }
     }
+    
+    private func tipsForImprovement(score: Int) -> String {
+        switch score {
+        case 0..<5:
+            return "Here are some tips to improve your score:\n\n1. Study the quiz topics in more detail.\n2. Review the questions you answered incorrectly.\n3. Take more practice quizzes to reinforce your knowledge."
+        case 5..<8:
+            return "You're doing well! To further improve:\n\n1. Focus on the topics where you scored lower.\n2. Analyze the questions you answered incorrectly.\n3. Keep practicing and aim for a higher score next time."
+        case 8..<10:
+            return "Great job! You're almost there:\n\n1. Review the questions you answered incorrectly.\n2. Dive deeper into the quiz topics for a better understanding.\n3. Keep practicing and aim for a perfect score."
+        case 10:
+            return "Congratulations on a perfect score!\n\n1. Share your achievement with others.\n2. Challenge yourself with more advanced quizzes.\n3. Continue expanding your knowledge in the subject."
+        default:
+            return ""
+        }
+    }
+    
 }
+
+struct FeedbackSheet_Previews: PreviewProvider {
+    static var previews: some View {
+        FeedbackSheet(score: 8, totalQuestions: 10)
+            .environmentObject(QuizModelClass())
+    }
+}
+
 
 
 //Fireworks animation
@@ -169,6 +212,7 @@ struct ParticlesModifier: ViewModifier {
             .modifier(FireworkParticlesGeometryEffect(time: time))
     }
 }
+
 
 struct CircularProgressBar: View {
     var score: Int
