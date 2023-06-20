@@ -52,7 +52,12 @@ struct HomeView: View {
                     VStack {
                         Button(action: {
                             isPopupShow.toggle()
-                            isDifficultyViewShow.toggle()
+                            if isPopupShow && UserDefaults.standard.string(forKey: "Username") == nil {
+                               
+                            }else{
+                                isDifficultyViewShow.toggle()
+                            }
+                            
                         }) {
                             HStack {
                                 Spacer()
