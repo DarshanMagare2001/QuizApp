@@ -2,6 +2,7 @@ import SwiftUI
 import Combine
 import AVFoundation
 
+// This is quiz view
 struct QuizView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewModel: QuizModelClass
