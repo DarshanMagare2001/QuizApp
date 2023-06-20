@@ -1,7 +1,6 @@
 import SwiftUI
 import Combine
 
-//Main quiz view
 struct QuizView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var viewModel: QuizModelClass
@@ -20,7 +19,7 @@ struct QuizView: View {
         self.quiz = quiz
         self._shuffledQuiz = State(initialValue: quiz.shuffled()) // Shuffle the quiz array
     }
-  
+
     var body: some View {
         VStack {
             HStack {
@@ -33,13 +32,13 @@ struct QuizView: View {
                         .frame(width: 25, height: 25)
                         .padding(5)
                 }
-                
+
                 Spacer()
-                
+
                 HStack{
-                    
+
                     Spacer()
-                    
+
                     VStack{
                         if let isAnsweredCorrectly = isAnsweredCorrectly, let selectedOption = selectedOption {
                             if isAnsweredCorrectly {
@@ -57,18 +56,18 @@ struct QuizView: View {
                             }
                         }
                     }
-                    
+
                     //Score
-                    
+
                     Text("Score: \(score)")
                         .font(.title)
                         .padding(10)
                         .background(Color(.systemGray5))
                         .cornerRadius(20)
-                    
+
                 }.padding(5)
             }
-            
+
             VStack(spacing: 5) {
                 VStack(spacing: 15) {
                     HStack {
@@ -82,11 +81,11 @@ struct QuizView: View {
                                 ProgressBarForCircularProgressbarForQuiz(counter: counter, countTo: countTo)
                                 ClockForCircularProgressbarForQuiz(counter: counter, countTo: countTo)
                             }
-                        
+
                         Spacer()
                     }
                     .frame(height: 80)
-                    
+
                     HStack {
                         Spacer()
                         HorizontalProgressBar(currentQuestionIndex: currentQuestionIndex, totalQuestions: quiz.count)
@@ -94,9 +93,9 @@ struct QuizView: View {
                         Spacer()
                     }
                 }
-                
+
                 //Questions
-                
+
                 HStack {
                     Text("Q. \(shuffledQuiz[currentQuestionIndex].questionTitle ?? "")")
                         .font(.headline)
@@ -104,63 +103,36 @@ struct QuizView: View {
                         .fixedSize(horizontal: false, vertical: true)
                     Spacer()
                 }
+
                 .padding(.horizontal, 10)
             }
-            
             Spacer()
             
-            VStack(alignment: .center) {
-                ForEach(0..<2) { rowIndex in
-                    HStack(spacing: 15) {
-                        ForEach(0..<2) { columnIndex in
-                            let optionIndex = (rowIndex * 2) + columnIndex + 1
-                            Button(action: {
-                                selectedOption = optionIndex // Set the selected option
-                                isAnsweredCorrectly = shuffledQuiz[currentQuestionIndex].getOption(for: optionIndex) == shuffledQuiz[currentQuestionIndex].correctAns
-                                
-                                if isAnsweredCorrectly == true {
-                                    score += 1 // Increment the score if answered correctly
-                                }
-                                
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                    // After 1 second, move to the next question or show feedback sheet
-                                    selectedOption = nil // Reset the selected option
-                                    isAnsweredCorrectly = nil // Reset the answered correctly flag
-                                    if currentQuestionIndex < shuffledQuiz.count - 1 {
-                                        currentQuestionIndex += 1
-                                        counter = 0 // Reset the timer when the question changes
-                                    } else {
-                                        // All questions finished, show feedback sheet
-                                        showFeedbackSheet = true
-                                        timer.upstream.connect().cancel() // Stop the timer
-                                    }
-                                }
-                            }) {
-                                HStack {
-                                    Text("\(optionIndex))")
-                                        .foregroundColor(.black)
-                                    Text(shuffledQuiz[currentQuestionIndex].getOption(for: optionIndex))
-                                        .font(.subheadline)
-                                        .bold()
-                                        .foregroundColor(.black)
-                                        .fixedSize(horizontal: false, vertical: true)
-                                        .padding(5)
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 10)
-                                                .fill(getButtonColor(optionIndex: optionIndex))
-                                                .opacity(getButtonOpacity(optionIndex: optionIndex))
-                                        )
-                                        .modifier(ConditionalBackgroundColorModifier(color: getButtonColor(optionIndex: optionIndex)))
-                                    Spacer()
-                                }
+            VStack{
+                ForEach(1...4, id: \.self) { optionIndex in
+                    Button(action: {
+                        checkAnswer(optionIndex: optionIndex)
+                    }) {
+                        VStack{
+                            Spacer()
+                            HStack {
+                                Spacer()
+                                Text(shuffledQuiz[currentQuestionIndex].getOption(for: optionIndex))
+                                    .font(.headline)
+                                    .foregroundColor(.black)
+                                Spacer()
                             }
-                            .disabled(selectedOption != nil)
-                        }
+                            Spacer()
+                        }.padding(.horizontal, 10)
+                            .background(getButtonColor(optionIndex: optionIndex))
+                            .opacity(getButtonOpacity(optionIndex: optionIndex))
+                            .background(Color(.systemGray5))
+                            .cornerRadius(20)
                     }
-                    .frame(maxWidth: .infinity)
+                    .disabled(selectedOption != nil) // Disable the button if an option is already selected
+                    Spacer()
                 }
             }
-            .padding(.bottom, 5)
             .padding(.horizontal, 10)
             
             Spacer()
@@ -181,6 +153,8 @@ struct QuizView: View {
                 if currentQuestionIndex < shuffledQuiz.count - 1 {
                     currentQuestionIndex += 1 // Move to the next question
                     counter = 0 // Reset the timer
+                    selectedOption = nil // Reset the selected option
+                    isAnsweredCorrectly = nil // Reset the correctness indicator
                 } else {
                     // All questions finished, show feedback sheet
                     showFeedbackSheet = true
@@ -189,9 +163,33 @@ struct QuizView: View {
             }
         }
     }
-    
-    //This function get buttons
-    
+
+    // Function to check the selected answer
+    // Function to check the selected answer
+    private func checkAnswer(optionIndex: Int) {
+        selectedOption = optionIndex
+        let correctOptionIndex = shuffledQuiz[currentQuestionIndex].getCorrectOptionIndex()
+        isAnsweredCorrectly = (optionIndex == correctOptionIndex)
+        if isAnsweredCorrectly == true {
+            score += 1
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            if currentQuestionIndex < shuffledQuiz.count - 1 {
+                currentQuestionIndex += 1 // Move to the next question
+                counter = 0 // Reset the timer
+                selectedOption = nil // Reset the selected option
+                isAnsweredCorrectly = nil // Reset the correctness indicator
+            } else {
+                // All questions finished, show feedback sheet
+                showFeedbackSheet = true
+                timer.upstream.connect().cancel() // Stop the timer
+            }
+        }
+    }
+
+
+    // This function gets the button color based on the selected option and correctness
     private func getButtonColor(optionIndex: Int) -> Color {
         if let isAnsweredCorrectly = isAnsweredCorrectly {
             if optionIndex == selectedOption {
@@ -204,10 +202,11 @@ struct QuizView: View {
                 return Color.green.opacity(0.4)
             }
         }
-        
+
         return Color.clear
     }
-    
+
+    // This function gets the button opacity based on the selected option
     private func getButtonOpacity(optionIndex: Int) -> Double {
         if selectedOption != nil && optionIndex != selectedOption {
             return 0.4
@@ -215,8 +214,6 @@ struct QuizView: View {
         return 1.0
     }
 }
-
-//Quiz options
 
 extension Quiz {
     func getOption(for index: Int) -> String {
@@ -233,10 +230,7 @@ extension Quiz {
             return ""
         }
     }
-    
-    //Function to get correct options
-    
-    
+
     func getCorrectOptionIndex() -> Int {
         if let correctAns = correctAns {
             switch correctAns {
@@ -256,30 +250,34 @@ extension Quiz {
     }
 }
 
-//This is use for giving color to options
-
 struct ConditionalBackgroundColorModifier: ViewModifier {
     let color: Color
-    
+
     func body(content: Content) -> some View {
-        content
-            .foregroundColor(color.opacity(color == Color.clear ? 0 : 1))
+        ZStack {
+            color
+            content
+        }
     }
 }
+
+extension View {
+    func conditionalBackgroundColor(_ condition: Bool, color: Color) -> some View {
+        modifier(ConditionalBackgroundColorModifier(color: condition ? color : .clear))
+    }
+}
+
 
 struct QuizView_Previews: PreviewProvider {
     static var previews: some View {
         let quizData = [
             Quiz(questionTitle: "Question 1", option1: "Option 1", option2: "Option 2", option3: "Option 3", option4: "Option 4", correctAns: "Option 1"),
-            Quiz(questionTitle: "Question 2", option1: "Option 1", option2: "Option 2", option3: "Option 3", option4: "Option 4", correctAns: "Option 3"),
-            Quiz(questionTitle: "Question 3", option1: "Option 1", option2: "Option 2", option3: "Option 3", option4: "Option 4", correctAns: "Option 4")
+            Quiz(questionTitle: "Question 2", option1: "Option 1", option2: "Option 2", option3: "Option 3", option4: "Option 4", correctAns: "Option 2"),
+            Quiz(questionTitle: "Question 3", option1: "Option 1", option2: "Option 2", option3: "Option 3", option4: "Option 4", correctAns: "Option 3")
         ]
         
         return QuizView(quiz: quizData)
+            .environmentObject(QuizModelClass())
     }
 }
-
-
-
-
 
