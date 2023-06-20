@@ -21,6 +21,7 @@
 		13823A952A3C3AA50078B91A /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13823A942A3C3AA50078B91A /* BottomSheet.swift */; };
 		13823A982A3C3D200078B91A /* SwiftUIBottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 13823A972A3C3D200078B91A /* SwiftUIBottomSheet */; };
 		13823A9A2A3C57750078B91A /* CircularTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13823A992A3C57750078B91A /* CircularTimer.swift */; };
+		1384F6DC2A417EED0039CD42 /* UserInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1384F6DB2A417EED0039CD42 /* UserInput.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		13823A8F2A3C2DA60078B91A /* BubbleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleAnimation.swift; sourceTree = "<group>"; };
 		13823A942A3C3AA50078B91A /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		13823A992A3C57750078B91A /* CircularTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularTimer.swift; sourceTree = "<group>"; };
+		1384F6DB2A417EED0039CD42 /* UserInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInput.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				13823A942A3C3AA50078B91A /* BottomSheet.swift */,
+				1384F6DB2A417EED0039CD42 /* UserInput.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13823A6D2A3C266B0078B91A /* ContentView.swift in Sources */,
+				1384F6DC2A417EED0039CD42 /* UserInput.swift in Sources */,
 				13823A8A2A3C286C0078B91A /* DifficultyView.swift in Sources */,
 				13686F552A4013650084EFDB /* FeedbackSheet.swift in Sources */,
 				13823A952A3C3AA50078B91A /* BottomSheet.swift in Sources */,
