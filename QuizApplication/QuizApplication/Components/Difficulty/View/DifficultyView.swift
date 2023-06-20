@@ -25,38 +25,37 @@ struct DifficultyView: View {
                             .resizable()
                             .foregroundColor(.white)
                             .frame(width: 25, height: 25)
-                            .padding(5)
+                        
                     }
                     Spacer()
                 }
+               
                 
-                VStack {
+                VStack{
                     VStack {
-                        VStack{
-                            Spacer()
-                            HStack {
-                                Spacer()
-                                Text("Easy")
-                                    .font(.largeTitle)
-                                    .bold()
-                                    .foregroundColor(.white)
-                                
-                                
+                        VStack {
+                            HStack{
                                 Spacer()
                             }
-                            
+                            Spacer()
+                            Text("Easy")
+                                .font(.largeTitle)
+                                .bold()
+                                .foregroundColor(.white)
                             Spacer()
                         }.background(.green)
                         
-                        HStack {
+                        VStack {
+                            HStack{
+                                Spacer()
+                            }
                             Spacer()
                             if let data = viewModel.quizModelArray {
                                 NavigationLink(destination: QuizView(quiz: data[0].quiz)) {
                                     Text("Start Quiz!")
-                                        .font(.headline)
+                                        .font(.title)
                                         .foregroundColor(.black)
                                         .bold()
-                                        .padding(5)
                                 }
                             }
                             Spacer()
@@ -65,36 +64,35 @@ struct DifficultyView: View {
                     }
                     .background(.white)
                     .cornerRadius(20)
-                    .padding(.horizontal, 20)
                     .shadow(color: .black, radius: 10)
                     
-                    Spacer()
+                  Spacer()
+                    
                     
                     VStack {
-                        VStack{
-                            Spacer()
-                            HStack {
-                                Spacer()
-                                Text("Normal")
-                                    .font(.largeTitle)
-                                    .bold()
-                                    .foregroundColor(.white)
-                                
+                        VStack {
+                            HStack{
                                 Spacer()
                             }
-                            
+                            Spacer()
+                            Text("Normal")
+                                .font(.largeTitle)
+                                .bold()
+                                .foregroundColor(.white)
                             Spacer()
                         }.background(.yellow)
                         
-                        HStack {
+                        VStack {
+                            HStack{
+                                Spacer()
+                            }
                             Spacer()
                             if let data = viewModel.quizModelArray {
                                 NavigationLink(destination: QuizView(quiz: data[1].quiz)) {
                                     Text("Start Quiz!")
-                                        .font(.headline)
+                                        .font(.title)
                                         .foregroundColor(.black)
                                         .bold()
-                                        .padding(5)
                                 }
                             }
                             Spacer()
@@ -103,36 +101,36 @@ struct DifficultyView: View {
                     }
                     .background(.white)
                     .cornerRadius(20)
-                    .padding(.horizontal, 20)
                     .shadow(color: .black, radius: 10)
                     
+                 
                     Spacer()
                     
                     VStack {
-                        VStack{
-                            Spacer()
-                            HStack {
-                                Spacer()
-                                Text("Hard")
-                                    .font(.largeTitle)
-                                    .bold()
-                                    .foregroundColor(.white)
-                                
+                        VStack {
+                            HStack{
                                 Spacer()
                             }
-                            
                             Spacer()
-                        } .background(.red)
+                            Text("Hard")
+                                .font(.largeTitle)
+                                .bold()
+                                .foregroundColor(.white)
+                            Spacer()
+                        }.background(.red)
                         
-                        HStack {
+                        VStack {
+                            HStack{
+                                Spacer()
+                            }
                             Spacer()
                             if let data = viewModel.quizModelArray {
                                 NavigationLink(destination: QuizView(quiz: data[2].quiz)) {
                                     Text("Start Quiz!")
-                                        .font(.headline)
+                                        .font(.title)
                                         .foregroundColor(.black)
                                         .bold()
-                                        .padding(5)
+                                    
                                 }
                             }
                             Spacer()
@@ -141,12 +139,14 @@ struct DifficultyView: View {
                     }
                     .background(.white)
                     .cornerRadius(20)
-                    .padding(.horizontal, 20)
                     .shadow(color: .black, radius: 10)
                 }
                 
-                Spacer()
-            }
+                
+               
+                
+            }.padding(.horizontal,10)
+                .padding(.top , 5)
             .navigationBarHidden(true)
         }
     }
