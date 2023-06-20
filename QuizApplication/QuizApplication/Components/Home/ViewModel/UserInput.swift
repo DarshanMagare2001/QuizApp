@@ -18,7 +18,8 @@ struct Userinput: View {
             Color.black.opacity(0.3).edgesIgnoringSafeArea(.all)
             
             VStack {
-                Text("Custom Popup")
+               
+                Text("Enter name")
                     .font(.title)
                     .bold()
                     .padding()
@@ -30,37 +31,47 @@ struct Userinput: View {
                     .cornerRadius(10)
                     .padding(.horizontal)
                 
-                HStack {
+                VStack {
                     Button(action: {
                         isShowing = false // Cancel button action
                     }) {
-                        Text("Cancel")
-                            .font(.title)
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.red)
+                        HStack{
+                            Spacer()
+                            Text("Cancel")
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .padding()
+                                
+                            Spacer()
+                        }.background(Color.red)
                             .cornerRadius(20)
                             .opacity(0.7)
                             .shadow(color: .white, radius: 10)
                     }
-                    
+                      
                     Button(action: {
                         UserDefaults.standard.set(username, forKey: "Username")
                         isShowing = false
                         isDifficultyViewShow.toggle() // Toggle the state here
                     }) {
-                        Text("Save")
-                            .font(.title)
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.green)
+                        HStack{
+                            Spacer()
+                            Text("Save")
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .padding()
+                                
+                            Spacer()
+                        }.background(Color.green)
                             .cornerRadius(20)
                             .opacity(username.isEmpty ? 0.5 : 0.7) // Adjust the opacity based on the condition
                             .shadow(color: .white, radius: 10)
                     }
                     .disabled(username.isEmpty) // Disable the button if the username is empty
+                   
                 }
                 .padding(.top, 20)
+            
             }
             .padding()
             .background(Color.white)
