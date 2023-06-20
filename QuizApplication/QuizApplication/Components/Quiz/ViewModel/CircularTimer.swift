@@ -20,7 +20,7 @@ struct ClockForCircularProgressbarForQuiz: View {
     var body: some View {
         VStack {
             Text(counterToMinutes())
-               .fontWeight(.black)
+               
         }
     }
     
@@ -38,8 +38,7 @@ struct ProgressTrackForCircularProgressbarForQuiz: View {
     var body: some View {
         Circle()
             .fill(Color.clear)
-            
-            .overlay(
+             .overlay(
                 Circle().stroke(Color.black)
             )
     }
@@ -57,7 +56,7 @@ struct ProgressBarForCircularProgressbarForQuiz: View {
                 Circle().trim(from: 0, to: progress())
                     .stroke(
                         style: StrokeStyle(
-                            lineWidth: 15,
+                            lineWidth: 10,
                             lineCap: .round,
                             lineJoin: .round
                         )

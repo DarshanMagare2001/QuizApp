@@ -21,7 +21,7 @@ struct QuizView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing:10){
             HStack {
                 Button {
                     presentationMode.wrappedValue.dismiss()
@@ -30,84 +30,71 @@ struct QuizView: View {
                         .resizable()
                         .foregroundColor(.black)
                         .frame(width: 25, height: 25)
-                        .padding(5)
+                    
                 }
                 
                 Spacer()
                 
-                HStack{
-                    
-                    Spacer()
-                    
-                    VStack{
-                        if let isAnsweredCorrectly = isAnsweredCorrectly, let selectedOption = selectedOption {
-                            if isAnsweredCorrectly {
-                                Text("Correct ans")
-                                    .font(.caption)
-                                    .padding(10)
-                                    .background(.green)
-                                    .cornerRadius(20)
-                            } else {
-                                Text("Wrong ans")
-                                    .font(.caption)
-                                    .padding(10)
-                                    .background(.red)
-                                    .cornerRadius(20)
-                            }
-                        }
-                    }
-                    
-                    //Score
-                    
-                    Text("Score: \(score)")
-                        .font(.title)
-                        .padding(10)
-                        .background(Color(.systemGray5))
-                        .cornerRadius(20)
-                    
-                }.padding(5)
-            }
-            
-            VStack(spacing: 5) {
-                VStack(spacing: 15) {
-                    HStack {
-                        Spacer()
-                        Circle()
-                        
-                            .foregroundColor(.white)
-                            .shadow(color: .black, radius: 20)
-                            .overlay {
-                                ProgressTrackForCircularProgressbarForQuiz()
-                                ProgressBarForCircularProgressbarForQuiz(counter: counter, countTo: countTo)
-                                ClockForCircularProgressbarForQuiz(counter: counter, countTo: countTo)
-                            }
-                        
-                        Spacer()
-                    }
-                    
-                    
-                    HStack {
-                        Spacer()
-                        HorizontalProgressBar(currentQuestionIndex: currentQuestionIndex, totalQuestions: quiz.count)
-                            .frame(height: 10)
-                        Spacer()
-                    }
-                }
-                
-                //Questions
-                
-                HStack {
-                    Text("Q. \(shuffledQuiz[currentQuestionIndex].questionTitle ?? "")")
-                        .font(.headline)
-                        .bold()
-                        .fixedSize(horizontal: false, vertical: true)
-                    Spacer()
-                }
-                
-                .padding(.horizontal, 10)
             }
             Spacer()
             
+            HStack {
+                Spacer()
+                Circle()
+                    .foregroundColor(.white)
+                    .shadow(color: .black, radius: 20)
+                    .overlay {
+                        ProgressTrackForCircularProgressbarForQuiz()
+                        ProgressBarForCircularProgressbarForQuiz(counter: counter, countTo: countTo)
+                        ClockForCircularProgressbarForQuiz(counter: counter, countTo: countTo)
+                    }
+                
+                Spacer()
+            }
+            
+            HStack {
+                Spacer()
+                Text("Score: \(score)")
+                    .font(.title)
+                VStack{
+                    
+                    if let isAnsweredCorrectly = isAnsweredCorrectly, let selectedOption = selectedOption {
+                        if isAnsweredCorrectly {
+                            HStack{
+                                
+                                Text("Correct ans")
+                                    .font(.headline)
+                                    .foregroundColor(.green)
+                            }
+                            
+                        } else {
+                            HStack{
+                                
+                                Text("Wrong ans")
+                                    .font(.headline)
+                                    .foregroundColor(.red)
+                            }
+                        }
+                    }
+                }
+                Spacer()
+            }
+            
+            HStack {
+                Spacer()
+                HorizontalProgressBar(currentQuestionIndex: currentQuestionIndex, totalQuestions: quiz.count)
+                    .frame(maxHeight:5)
+                    .cornerRadius(10)
+                Spacer()
+            }
+            
+            HStack {
+                Text("Q. \(shuffledQuiz[currentQuestionIndex].questionTitle ?? "")")
+                    .font(.headline)
+                    .bold()
+                    .fixedSize(horizontal: false, vertical: true)
+                Spacer()
+            }
             VStack{
                 ForEach(1...4, id: \.self) { optionIndex in
                     Button(action: {
@@ -118,48 +105,48 @@ struct QuizView: View {
                             HStack {
                                 Spacer()
                                 Text(shuffledQuiz[currentQuestionIndex].getOption(for: optionIndex))
-                                    .font(.headline)
+                                    .font(.subheadline)
                                     .foregroundColor(.black)
+                                    .fixedSize(horizontal: false, vertical: true)
                                 Spacer()
                             }
                             Spacer()
-                        }.padding(.horizontal, 10)
-                            .background(getButtonColor(optionIndex: optionIndex))
+                        }.background(getButtonColor(optionIndex: optionIndex))
                             .opacity(getButtonOpacity(optionIndex: optionIndex))
                             .background(Color(.systemGray5))
                             .cornerRadius(20)
+                            .shadow(color: .black, radius: 20)
                     }
                     .disabled(selectedOption != nil) // Disable the button if an option is already selected
                     Spacer()
                 }
             }
-            .padding(.horizontal, 10)
-            .padding(.horizontal, 10)
             .navigationBarHidden(true)
-        }
-        .onChange(of: viewModel.dismiss, perform: { _ in
-            presentationMode.wrappedValue.dismiss()
-        })
-        .fullScreenCover(isPresented: $showFeedbackSheet) {
-            FeedbackSheet(score: score, totalQuestions: shuffledQuiz.count)
-        }
-        .onReceive(timer) { time in
-            if counter < countTo {
-                counter += 1
-            } else {
-                // Timer finished for the current question
-                if currentQuestionIndex < shuffledQuiz.count - 1 {
-                    currentQuestionIndex += 1 // Move to the next question
-                    counter = 0 // Reset the timer
-                    selectedOption = nil // Reset the selected option
-                    isAnsweredCorrectly = nil // Reset the correctness indicator
+         
+        }.padding(5)
+            .onChange(of: viewModel.dismiss, perform: { _ in
+                presentationMode.wrappedValue.dismiss()
+            })
+            .fullScreenCover(isPresented: $showFeedbackSheet) {
+                FeedbackSheet(score: score, totalQuestions: shuffledQuiz.count)
+            }
+            .onReceive(timer) { time in
+                if counter < countTo {
+                    counter += 1
                 } else {
-                    // All questions finished, show feedback sheet
-                    showFeedbackSheet = true
-                    timer.upstream.connect().cancel() // Stop the timer
+                    // Timer finished for the current question
+                    if currentQuestionIndex < shuffledQuiz.count - 1 {
+                        currentQuestionIndex += 1 // Move to the next question
+                        counter = 0 // Reset the timer
+                        selectedOption = nil // Reset the selected option
+                        isAnsweredCorrectly = nil // Reset the correctness indicator
+                    } else {
+                        // All questions finished, show feedback sheet
+                        showFeedbackSheet = true
+                        timer.upstream.connect().cancel() // Stop the timer
+                    }
                 }
             }
-        }
     }
     
     // Function to check the selected answer
@@ -207,7 +194,7 @@ struct QuizView: View {
     // This function gets the button opacity based on the selected option
     private func getButtonOpacity(optionIndex: Int) -> Double {
         if selectedOption != nil && optionIndex != selectedOption {
-            return 0.4
+            return 0.8
         }
         return 1.0
     }
