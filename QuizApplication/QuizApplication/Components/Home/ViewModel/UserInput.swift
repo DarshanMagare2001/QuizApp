@@ -11,6 +11,8 @@ struct Userinput: View {
     @Binding var isShowing: Bool
     @State private var username: String = ""
     
+    @Binding var isDifficultyViewShow: Bool
+    
     var body: some View {
         ZStack {
             Color.black.opacity(0.3).edgesIgnoringSafeArea(.all)
@@ -31,6 +33,7 @@ struct Userinput: View {
                 Button(action: {
                     UserDefaults.standard.set(username, forKey: "Username")
                     isShowing = false
+                    isDifficultyViewShow.toggle() // Toggle the state here
                 }) {
                     Text("Save")
                         .font(.title)
@@ -51,4 +54,5 @@ struct Userinput: View {
         }
     }
 }
+
 

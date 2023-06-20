@@ -15,7 +15,7 @@ struct HomeView: View {
             BubbleView()
             if isPopupShow {
                 
-                Userinput(isShowing: $isPopupShow)
+                Userinput(isShowing: $isPopupShow, isDifficultyViewShow: $isDifficultyViewShow)
                 
             }else{
                 VStack {
