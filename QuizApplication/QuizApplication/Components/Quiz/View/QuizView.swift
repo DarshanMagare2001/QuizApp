@@ -21,7 +21,9 @@ struct QuizView: View {
     }
     
     var body: some View {
-        VStack(spacing:10){
+        VStack{
+            Spacer()
+            
             HStack {
                 Button {
                     presentationMode.wrappedValue.dismiss()
@@ -36,65 +38,68 @@ struct QuizView: View {
                 Spacer()
                 
             }
-            Spacer()
             
-            HStack {
-                Spacer()
-                Circle()
-                    .foregroundColor(.white)
-                    .shadow(color: .black, radius: 20)
-                    .overlay {
-                        ProgressTrackForCircularProgressbarForQuiz()
-                        ProgressBarForCircularProgressbarForQuiz(counter: counter, countTo: countTo)
-                        ClockForCircularProgressbarForQuiz(counter: counter, countTo: countTo)
-                    }
-                
-                Spacer()
-            }
-            
-            HStack {
-                Spacer()
-                Text("Score: \(score)")
-                    .font(.title)
-                VStack{
+            VStack{
+                HStack {
+                    Spacer()
+                    Circle()
+                        .foregroundColor(.white)
+                        .shadow(color: .black, radius: 20)
+                        .overlay {
+                            ProgressTrackForCircularProgressbarForQuiz()
+                            ProgressBarForCircularProgressbarForQuiz(counter: counter, countTo: countTo)
+                            ClockForCircularProgressbarForQuiz(counter: counter, countTo: countTo)
+                        }
                     
-                    if let isAnsweredCorrectly = isAnsweredCorrectly, let selectedOption = selectedOption {
-                        if isAnsweredCorrectly {
-                            HStack{
+                    Spacer()
+                }
+                .frame(minHeight:40 ,maxHeight:100)
+                
+                HStack {
+                    Spacer()
+                    Text("Score: \(score)")
+                        .font(.headline)
+                        .bold()
+                    VStack{
+                        
+                        if let isAnsweredCorrectly = isAnsweredCorrectly, let selectedOption = selectedOption {
+                            if isAnsweredCorrectly {
+                                HStack{
+                                    Text("Correct ans")
+                                        .font(.headline)
+                                        .foregroundColor(.green)
+                                }
                                 
-                                Text("Correct ans")
-                                    .font(.headline)
-                                    .foregroundColor(.green)
-                            }
-                            
-                        } else {
-                            HStack{
-                                
-                                Text("Wrong ans")
-                                    .font(.headline)
-                                    .foregroundColor(.red)
+                            } else {
+                                HStack{
+                                    Text("Wrong ans")
+                                        .font(.headline)
+                                        .foregroundColor(.red)
+                                }
                             }
                         }
                     }
+                    Spacer()
                 }
-                Spacer()
+                
+                HStack {
+                    Spacer()
+                    HorizontalProgressBar(currentQuestionIndex: currentQuestionIndex, totalQuestions: quiz.count)
+                        .frame(maxHeight:5)
+                        .cornerRadius(10)
+                    Spacer()
+                }
+                
+                HStack {
+                    Text("Q. \(shuffledQuiz[currentQuestionIndex].questionTitle ?? "")")
+                        .font(.title3)
+                        .bold()
+                        .fixedSize(horizontal: false, vertical: true)
+                    Spacer()
+                }
+              
             }
-            
-            HStack {
-                Spacer()
-                HorizontalProgressBar(currentQuestionIndex: currentQuestionIndex, totalQuestions: quiz.count)
-                    .frame(maxHeight:5)
-                    .cornerRadius(10)
-                Spacer()
-            }
-            
-            HStack {
-                Text("Q. \(shuffledQuiz[currentQuestionIndex].questionTitle ?? "")")
-                    .font(.headline)
-                    .bold()
-                    .fixedSize(horizontal: false, vertical: true)
-                Spacer()
-            }
+            Spacer()
             VStack{
                 ForEach(1...4, id: \.self) { optionIndex in
                     Button(action: {
@@ -105,8 +110,9 @@ struct QuizView: View {
                             HStack {
                                 Spacer()
                                 Text(shuffledQuiz[currentQuestionIndex].getOption(for: optionIndex))
-                                    .font(.subheadline)
+                                    .font(.headline)
                                     .foregroundColor(.black)
+                                    .bold()
                                     .fixedSize(horizontal: false, vertical: true)
                                 Spacer()
                             }
@@ -121,9 +127,11 @@ struct QuizView: View {
                     Spacer()
                 }
             }
+            
             .navigationBarHidden(true)
-         
-        }.padding(5)
+            
+        }.padding(.horizontal , 10)
+            .padding(.top,5)
             .onChange(of: viewModel.dismiss, perform: { _ in
                 presentationMode.wrappedValue.dismiss()
             })
